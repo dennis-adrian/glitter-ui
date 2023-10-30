@@ -1,0 +1,19 @@
+.hero {
+  align-items: center;
+  background-image: linear-gradient(#F2A9C3 0%, #B4BDE8 51%, #F2A9C3 100%);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+
+  &-title {
+    color: white;
+    font-size: 3rem;
+    text-align: center;
+  }
+
+  &-img {
+  max-height: 300px;
+  max-width: 300px;
+  }
+}

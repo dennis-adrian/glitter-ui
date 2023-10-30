@@ -1,8 +1,8 @@
-import Button from './components/Button'
+import HomePage from './pages/Home'
 
 function App() {
   return (
-    <Button />
+    <HomePage />
   )
 }
 
