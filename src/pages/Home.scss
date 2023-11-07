@@ -16,9 +16,11 @@ body {
   &-heading {
     position: absolute;
     top: 2rem;
+    z-index: 1000;
   }
 
   &-mascot {
+    animation: moveUpDown 4s ease-in-out infinite;
     margin: 8rem 0rem 0rem;
   }
 
@@ -50,5 +52,14 @@ body {
     margin: 1rem 0rem 4rem;
     text-align: center;
     width: 70%;
+  }
+}
+
+@keyframes moveUpDown {
+  0%, 100% {
+      transform: translateY(0);
+  }
+  50% {
+      transform: translateY(-10px); /* Adjust the distance as desired */
   }
 }
