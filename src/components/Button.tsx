@@ -1,8 +1,13 @@
 import './Button.scss'
 
-const Button = () => {
+type Props = {
+  children: React.ReactNode,
+  onClick: () => void
+}
+
+const Button = ({ children, onClick }: Props) => {
   return (
-    <button className='main'>Click here!</button>
+    <button className='main' onClick={onClick}>{children}</button>
   )
 }
 
