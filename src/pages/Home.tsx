@@ -1,5 +1,4 @@
 import Button from '../components/Button'
-import { signInWithGoogle } from '../helpers/auth_helper'
 
 import mascot from '../assets/mascot.png'
 import glitter from '../assets/glitter.png'
@@ -22,7 +21,7 @@ const HomePage = () => {
           <span>10:00 a 20:00</span>
           <span>Galería del CBA, calle sucre</span>
         </AccentCard>
-        <Button onClick={() => signInWithGoogle()}>Crea tu cuenta</Button>
+        <Button onClick={() => {}}>Crea tu cuenta</Button>
         <p className='hero-text'>
           Crea experiencias que te inspiren, conecta con otros artistas y celebra lo que eres 
         </p>
