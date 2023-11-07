@@ -1,0 +1,14 @@
+@import 'src/variables.scss';
+
+footer {
+  margin: 1rem;
+  text-align: center;
+
+  .social-media {
+    a {
+      color: $primary-color;
+      font-size: 1.5rem;
+      margin-left: 0.625rem;
+    }
+  }
+}

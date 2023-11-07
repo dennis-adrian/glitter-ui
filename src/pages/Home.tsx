@@ -3,13 +3,11 @@ import { signInWithGoogle } from '../helpers/auth_helper'
 
 import mascot from '../assets/mascot.png'
 import glitter from '../assets/glitter.png'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebook, faInstagram, faTiktok } from '@fortawesome/free-brands-svg-icons'
 
 import AccentCard from '../components/AccentCard'
 
+import Footer from '../components/Footer'
 import './Home.scss'
-import { faEnvelope } from '@fortawesome/free-regular-svg-icons'
 
 const HomePage = () => {
   return (
@@ -28,21 +26,8 @@ const HomePage = () => {
         <p className='hero-text'>
           Crea experiencias que te inspiren, conecta con otros artistas y celebra lo que eres 
         </p>
-        <div className='social-media'>
-          <a href='https://instagram.com/glitter.bo'>
-            <FontAwesomeIcon icon={faInstagram} />
-          </a>
-          <a href='#'>
-            <FontAwesomeIcon icon={faTiktok} />
-          </a>
-          <a href='#' referrerPolicy='no-referrer' target='_blank'>
-            <FontAwesomeIcon icon={faFacebook} />
-          </a>
-          <a href="mailto:glitter.festival.creativo@gmail.com">
-            <FontAwesomeIcon icon={faEnvelope} />
-          </a>
-        </div>
       </section>
+      <Footer />
     </>
   )
 }
