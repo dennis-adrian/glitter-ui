@@ -4,11 +4,13 @@ body {
   background-image: linear-gradient(#2c2055, #a976ba, #f55da5, #fe8aba, #ffd9e8);
 }
 
-.hero {
+.hero, .event-info {
   align-items: center;
   display: flex;
   flex-direction: column;
+}
 
+.hero {
   > img {
     max-width: 100%;
   }
@@ -31,7 +33,18 @@ body {
     margin-top: -1rem;
   }
 
-  &-subtitle {
+  .hero-text {
+    color: white;
+    text-align: center;
+    width: 70%;
+    margin: 0.5rem;
+  }
+}
+
+.event-info {
+  margin: 1rem 0rem 4rem;
+
+  &-next-event {
     color: white;
     font-family: $font-family;
     font-weight: $text-weight-regular;
@@ -45,13 +58,6 @@ body {
 
   .accent-card {
     margin: 0.5rem 0;
-  }
-
-  .hero-text {
-    color: $primary-color;
-    margin: 1rem 0rem 4rem;
-    text-align: center;
-    width: 70%;
   }
 }
 
