@@ -1,57 +1,72 @@
 @import 'src/variables.scss';
 
-body {
+.home-page {
   background-image: linear-gradient(#2c2055, #a976ba, #f55da5, #fe8aba, #ffd9e8);
-}
-
-.hero {
-  align-items: center;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
 
-  > img {
-    max-width: 100%;
+  .hero, .event-info {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
   }
-
-  &-heading {
+  
+  .heading-img {
+    max-width: 100%;
     position: absolute;
     top: 2rem;
     z-index: 1000;
   }
-
-  &-mascot {
-    animation: moveUpDown 2s ease-in-out infinite;
+  
+  .hero {
     margin: 8rem 0rem 0rem;
+  
+    &-mascot, &-mascot-desktop {
+      animation: moveUpDown 2s ease-in-out infinite;
+    }
+  
+    &-mascot {
+      max-width: 100%;
+    }
+  
+    &-mascot-desktop {
+      display: none;
+    }
+  
+    &-title {
+      color: white;
+      font-family: $highlight-font-family;
+      font-size: $font-xl;
+      margin-top: -1rem;
+    }
+  
+    &-text {
+      color: white;
+      text-align: center;
+      width: 70%;
+      margin: 0.5rem;
+    }
   }
-
-  &-title {
-    color: white;
-    font-family: $highlight-font-family;
-    font-size: $font-xl;
-    margin-top: -1rem;
-  }
-
-  &-subtitle {
-    color: white;
-    font-family: $font-family;
-    font-weight: $text-weight-regular;
-    margin-top: 1.5rem;
-    text-transform: capitalize;
-  }
-
-  .main {
-    margin: 1rem 0rem;
-  }
-
-  .accent-card {
-    margin: 0.5rem 0;
-  }
-
-  .hero-text {
-    color: $primary-color;
-    margin: 1rem 0rem 4rem;
-    text-align: center;
-    width: 70%;
+  
+  .event-info {
+    margin-top: 2rem;
+  
+    &-next-event {
+      color: white;
+      font-family: $font-family;
+      font-weight: $text-weight-regular;
+      text-transform: capitalize;
+    }
+  
+    .primary-button {
+      margin: 3rem 0rem;
+    }
+  
+    .accent-card {
+      margin: 0.5rem 0;
+    }
   }
 }
 
@@ -61,5 +76,79 @@ body {
   }
   50% {
       transform: translateY(-10px); /* Adjust the distance as desired */
+  }
+}
+
+@media (min-width: 768px) {
+  .heading-img {
+    left: 50%;
+    max-width: 500px;
+    top: 0.625rem;
+    transform: translateX(-50%);
+  }
+
+  .main-content {
+    align-items: center;
+    display: flex;
+    margin: 16rem 0rem 0rem;
+    width: 100%;
+
+    .hero, .event-info {
+      // to make each section take up the same amount of space
+      flex: 1;
+    }
+
+    .hero {
+      margin: 0;
+
+      &-mascot {
+        display: none;
+      }
+
+      &-mascot-desktop {
+        display: block;
+        max-width: 500px;
+      }
+
+      &-title, &-text {
+        color: $primary-color;
+        margin: 0;
+      }
+
+      &-title {
+        font-size: $font-xxl;
+      }
+
+      &-text {
+        font-size: $font-large;
+        width: 60%;
+      }
+    }
+  
+    .event-info {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      justify-content: space-evenly;
+      height: 100%;
+      margin: 0;
+
+      &-next-event {
+        margin: 0;
+        font-size: $font-xxl;
+      }
+  
+      .primary-button {
+        font-size: $font-large;
+      }
+  
+      .accent-card {
+        font-size: $font-large;
+        margin: 0.5rem 0;
+        max-width: 380px;
+        width: 60%;
+      }
+    }
+    
   }
 }

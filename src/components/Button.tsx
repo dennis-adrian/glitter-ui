@@ -7,7 +7,7 @@ type Props = {
 
 const Button = ({ children, onClick }: Props) => {
   return (
-    <button className='main' onClick={onClick}>{children}</button>
+    <button className='primary-button' onClick={onClick}>{children}</button>
   )
 }
 

@@ -1,33 +1,38 @@
-import Button from '../components/Button'
-
 import mascot from '../assets/mascot.png'
+import mascotDesktop from '../assets/mascot_desktop.png'
 import glitter from '../assets/glitter.png'
 
 import AccentCard from '../components/AccentCard'
 
 import Footer from '../components/Footer'
 import './Home.scss'
+import SignInButton from '../components/authentication'
 
 const HomePage = () => {
   return (
-    <>
-      <section className='hero'>
-        <img className='hero-heading' src={glitter} alt="glitter" />
-        <img className='hero-mascot' src={mascot} alt="glitter mascot" />
-        <h1 className='hero-title'>¡brillemos juntos!</h1>
-        <h2 className='hero-subtitle'>próximo evento</h2>
-        <AccentCard styles={{ fontWeight: 400, width: '70%' }}>
-          <span>Viernes 1 y sábado 2 de diciembre</span>
-          <span>10:00 a 20:00</span>
-          <span>Galería del CBA, calle sucre</span>
-        </AccentCard>
-        <Button onClick={() => {}}>Crea tu cuenta</Button>
-        <p className='hero-text'>
-          Crea experiencias que te inspiren, conecta con otros artistas y celebra lo que eres 
-        </p>
+    <section className='home-page'>
+      <img className='heading-img' src={glitter} alt="glitter" />
+      <section className='main-content'>
+        <section className='hero'>
+          <img className='hero-mascot' src={mascot} alt="glitter mascot" />
+          <img className='hero-mascot-desktop' src={mascotDesktop} alt="glitter mascot" />
+          <h1 className='hero-title'>¡brillemos juntos!</h1>
+          <p className='hero-text'>
+            Crea experiencias que te inspiren, conecta con otros artistas y celebra lo que eres 
+          </p>
+        </section>
+        <section className='event-info' >
+          <h2 className='event-info-next-event'>próximo evento</h2>
+          <AccentCard styles={{ fontWeight: 400 }}>
+            <span>Viernes 1 y sábado 2 de diciembre</span>
+            <span>10:00 a 20:00</span>
+            <span>Galería del CBA, calle Sucre #346</span>
+          </AccentCard>
+          <SignInButton />
+        </section>
       </section>
       <Footer />
-    </>
+    </section>
   )
 }
 
