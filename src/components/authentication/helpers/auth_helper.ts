@@ -1,16 +1,19 @@
+import { Dispatch, SetStateAction } from 'react';
+
 import { auth } from '../../../config/firebase';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 const provider = new GoogleAuthProvider();
 
-export const signInWithGoogle = async () => {
+export const signInWithGoogle = async (setToken: Dispatch<SetStateAction<string>>) => {
   try {
     const result = await signInWithPopup(auth, provider);
     const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential?.accessToken;
+    const accessToken = credential?.accessToken;
     const { displayName, email, photoURL, uid: firebaseId } = result.user;
 
-    localStorage.setItem('token', token || '');
+    localStorage.setItem('accessToken', accessToken || '');
+    setToken(accessToken || '');
 
     return {
       displayName,

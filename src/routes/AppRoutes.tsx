@@ -1,9 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
-import HomePage from '../pages/Home';
-import ErrorPage from '../pages/Error';
+
 import { ProtectedRoute } from './ProtectedRoute';
-import UserProfile from '../pages/UserProfile';
+import ErrorPage from '../pages/Error';
+import HomePage from '../pages/Home';
 import LoginPage from '../pages/Login';
+import UserProfile from '../pages/UserProfile';
 
 export const AppRoutes = createBrowserRouter([
   {

@@ -1,8 +1,16 @@
-import HomePage from './pages/Home'
+import { useState } from 'react';
+import { RouterProvider } from 'react-router-dom'
+
+import { AppRoutes } from './routes/AppRoutes'
+import { AuthContext } from './contexts';
 
 function App() {
+  const [token, setToken] = useState(localStorage.getItem('accessToken') || '');
+
   return (
-    <HomePage />
+    <AuthContext.Provider value={{ token, setToken }}>
+      <RouterProvider router={AppRoutes} />
+    </AuthContext.Provider>
   )
 }
 
