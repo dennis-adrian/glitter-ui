@@ -1,4 +1,5 @@
 import logo from '../assets/logo.png'
+import SignUpButton from '../components/authentication/SignUpButton'
 
 const LoginPage = () => {
   return (
@@ -9,7 +10,7 @@ const LoginPage = () => {
         </div>
       </div>
       <div>
-        <button className='btn btn-block btn-primary'>Crear cuenta</button>
+        <SignUpButton />
         <button className='btn btn-block btn-outline btn-secondary mt-2'>Iniciar sesión</button>
       </div>
     </div>
