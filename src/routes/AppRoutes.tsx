@@ -1,7 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
-import HomePage from '../pages/Home';
-import ErrorPage from '../pages/Error';
+
 import { ProtectedRoute } from './ProtectedRoute';
+import ErrorPage from '../pages/Error';
+import HomePage from '../pages/Home';
+import LoginPage from '../pages/Login';
 import UserProfile from '../pages/UserProfile';
 
 export const AppRoutes = createBrowserRouter([
@@ -13,5 +15,9 @@ export const AppRoutes = createBrowserRouter([
   {
     path: '/user_profile',
     element: <ProtectedRoute component={UserProfile} />,
+  },
+  {
+    path: '/login',
+    element: <LoginPage />,
   }
 ])
