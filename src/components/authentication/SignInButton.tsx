@@ -1,4 +1,4 @@
-import Button from '../../components/Button'
+import Button from '../Button'
 import { signInWithGoogle } from './helpers/auth_helper'
 
 const SignInButton = () => {

@@ -7,5 +7,5 @@ type Props = {
 export const ProtectedRoute = ({ component: Component }: Props) => {
   const isAuthenticated = localStorage.getItem('email');
 
-  return isAuthenticated ? <Component /> : <Navigate to="/" />;
+  return isAuthenticated ? <Component /> : <Navigate to="/login" />;
 };

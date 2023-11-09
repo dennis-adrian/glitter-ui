@@ -1,12 +1,13 @@
+import { Link } from 'react-router-dom'
+
 import mascot from '../assets/mascot.png'
 import mascotDesktop from '../assets/mascot_desktop.png'
 import glitter from '../assets/glitter.png'
 
 import AccentCard from '../components/AccentCard'
-
 import Footer from '../components/Footer'
+
 import './Home.scss'
-import SignInButton from '../components/authentication'
 
 const HomePage = () => {
   return (
@@ -28,7 +29,7 @@ const HomePage = () => {
             <span>10:00 a 20:00</span>
             <span>Galería del CBA, calle Sucre #346</span>
           </AccentCard>
-          <SignInButton />
+          <Link className='landing-primary-button' to='/login'>¡Quiero participar!</Link>
         </section>
       </section>
       <Footer />

@@ -4,6 +4,11 @@
 @tailwind utilities;
 
 :root {
-  font-family: $font-family;
-  font-weight: $text-weight;
+  font-family: 'Roboto', sans-serif;
+}
+
+.btn {
+  // to prevent daisyui from showing uppercase bold text in buttons
+  text-transform: none;
+  font-weight: 400;
 }

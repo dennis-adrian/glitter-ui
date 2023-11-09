@@ -3,6 +3,7 @@ import HomePage from '../pages/Home';
 import ErrorPage from '../pages/Error';
 import { ProtectedRoute } from './ProtectedRoute';
 import UserProfile from '../pages/UserProfile';
+import LoginPage from '../pages/Login';
 
 export const AppRoutes = createBrowserRouter([
   {
@@ -13,5 +14,9 @@ export const AppRoutes = createBrowserRouter([
   {
     path: '/user_profile',
     element: <ProtectedRoute component={UserProfile} />,
+  },
+  {
+    path: '/login',
+    element: <LoginPage />,
   }
 ])
