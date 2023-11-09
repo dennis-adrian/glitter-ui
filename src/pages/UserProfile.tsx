@@ -13,7 +13,7 @@ const UserProfile = () => {
       <div className="navbar bg-base-100">
         <div className="navbar-start">
           <div className="avatar">
-            <div className="w-10 rounded-full">
+            <div className="w-16 rounded-full">
               <img src={logo} alt="glitter logo" />
             </div>
           </div>

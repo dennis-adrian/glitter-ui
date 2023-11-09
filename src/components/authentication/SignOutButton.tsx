@@ -7,7 +7,7 @@ const SignOutButton = () => {
 
   return (
     <button
-      className="btn btn-outline btn-secondary mt-2"
+      className="btn btn-outline btn-secondary m-2"
       onClick={() => signOutFromGoogle(setToken)}
     >
       Cerrar sesión
