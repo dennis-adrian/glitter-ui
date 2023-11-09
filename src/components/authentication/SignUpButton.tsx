@@ -1,41 +1,48 @@
-import { useContext } from "react";
+import { Dispatch, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { signInWithGoogle } from "./helpers/auth_helper";
-import { AuthContext } from "../../contexts";
+import { signInWithGoogle, signOut } from './helpers';
+import { AuthContext } from '../../contexts';
+import { FirebaseUser } from '../../types/userTypes';
+import { baseUrl } from '../../utils';
 
-type User = {
-  displayName: string;
-  email: string;
-  photoURL: string;
-  firebaseId: string;
-}
-
-const postUser = async (user: User) => {
-  const response = await fetch('http://localhost:3000/users', {
+const postUser = async (user: FirebaseUser) => {
+  const response = await fetch(`${baseUrl}/users`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      name: user.displayName,
-      email: user.email,
-      isArtist: true,
-    })
-  })
-  return response.json()
-}
+    body: JSON.stringify({ ...user, isArtist: true }),
+  });
+  return response.json();
+};
 
-const SignUpButton = () => {
-  const { token, setToken } = useContext(AuthContext);
+type Props = {
+  onError: Dispatch<React.SetStateAction<string>>;
+};
+
+const SignUpButton = ({ onError }: Props) => {
+  const { setToken } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const errorMessage = 'No se pudo crear la cuenta. Intente de nuevo.';
 
   const handleSignUp = async () => {
     const result = await signInWithGoogle(setToken);
-    if (result) {
-      postUser(result as User)
+    try {
+      const res = await postUser(result as FirebaseUser);
+      if (!res?.id) {
+        signOut(setToken);
+        onError(errorMessage);
+      }
+
+      navigate('/user_profile');
+    } catch (error) {
+      signOut(setToken);
+      onError(errorMessage);
     }
   };
 
   return (
     <button className="btn btn-block btn-primary" onClick={handleSignUp}>
-      Crear cuenta {token}
+      Crear cuenta
     </button>
   );
 };
