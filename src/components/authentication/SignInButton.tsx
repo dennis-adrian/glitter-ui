@@ -1,7 +1,7 @@
 import { Dispatch, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { signInWithGoogle } from './helpers';
+import { signInWithGoogle, signOutFromGoogle } from './helpers';
 import { AuthContext, CurrentUserContext } from '../../contexts';
 import { FirebaseUser } from '../../types/userTypes';
 import { baseUrl } from '../../utils';
@@ -27,6 +27,7 @@ const SignInButton = ({ onError }: Props) => {
     if (result) {
       const user = await fetchUser(result as FirebaseUser);
       if (!user.id) {
+        signOutFromGoogle(setToken);
         onError('No se pudo iniciar sesión. Intente de nuevo o intente crear una cuenta');
       }
 

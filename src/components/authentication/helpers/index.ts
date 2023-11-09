@@ -15,6 +15,7 @@ export const signInWithGoogle = async (setToken: Dispatch<SetStateAction<string>
     const { displayName, email, photoURL, uid: firebaseId } = result.user;
 
     localStorage.setItem('accessToken', accessToken || '');
+    localStorage.setItem('firebaseId', firebaseId || '');
     setToken(accessToken || '');
 
     const firstName = displayName?.split(' ')[0];
@@ -34,10 +35,11 @@ export const signInWithGoogle = async (setToken: Dispatch<SetStateAction<string>
   }
 }
 
-export const signOut = async (setToken: Dispatch<SetStateAction<string>>) => {
+export const signOutFromGoogle = async (setToken: Dispatch<SetStateAction<string>>) => {
   try {
     await auth.signOut();
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('firebaseId');
     setToken('');
   } catch (error) {
     console.log(error);

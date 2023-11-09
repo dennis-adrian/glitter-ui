@@ -1,7 +1,7 @@
 import { Dispatch, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { signInWithGoogle, signOut } from './helpers';
+import { signInWithGoogle, signOutFromGoogle } from './helpers';
 import { AuthContext } from '../../contexts';
 import { FirebaseUser } from '../../types/userTypes';
 import { baseUrl } from '../../utils';
@@ -29,13 +29,13 @@ const SignUpButton = ({ onError }: Props) => {
     try {
       const res = await postUser(result as FirebaseUser);
       if (!res?.id) {
-        signOut(setToken);
+        signOutFromGoogle(setToken);
         onError(errorMessage);
       }
 
       navigate('/user_profile');
     } catch (error) {
-      signOut(setToken);
+      signOutFromGoogle(setToken);
       onError(errorMessage);
     }
   };

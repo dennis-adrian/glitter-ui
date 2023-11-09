@@ -10,12 +10,12 @@ export type FirebaseUser = {
 export type User = {
   firstName: string;
   lastName: string;
-  username: string;
+  displayName: string;
   email: string;
   country: string;
   city: string;
   phone: string;
   firebaseId: string;
-  photoUrl: string;
+  photoURL: string;
   isCustomPhoto: boolean;
 }
