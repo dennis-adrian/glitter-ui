@@ -1,10 +1,11 @@
-import { Dispatch, useContext } from 'react';
+import { Dispatch } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
-import { signInWithGoogle, signOutFromGoogle } from './helpers';
-import { AuthContext, CurrentUserContext } from '../../contexts';
-import { FirebaseUser } from '../../types/userTypes';
+import { isUser, signInWithGoogle } from './helpers';
+import { FirebaseUser, User } from '../../types/userTypes';
 import { baseUrl } from '../../utils';
+import { setCurrentUserAccessToken, setCurrentUser, setLoginStatus } from '../../store/features/currentUserSlice';
 
 const fetchUser = async (user: FirebaseUser) => {
   const response = await fetch(
@@ -18,21 +19,28 @@ type Props = {
 };
 
 const SignInButton = ({ onError }: Props) => {
-  const { setToken } = useContext(AuthContext);
-  const { setCurrentUser } = useContext(CurrentUserContext);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSignIn = async () => {
-    const result = await signInWithGoogle(setToken);
-    if (result) {
-      const user = await fetchUser(result as FirebaseUser);
+    const result = await signInWithGoogle();
+    const errorMessage = 'Error al iniciar sesión. Intente de nuevo o intente crear una cuenta';
+
+    if (isUser(result)) {
+      const accessToken = (result as FirebaseUser).accessToken;
+      const user: User = await fetchUser(result as FirebaseUser);
       if (!user.id) {
-        signOutFromGoogle(setToken);
-        onError('No se pudo iniciar sesión. Intente de nuevo o intente crear una cuenta');
+        onError(errorMessage);
       }
 
-      setCurrentUser(user);
+      dispatch(setCurrentUserAccessToken(accessToken));
+      localStorage.setItem('accessToken', accessToken || '');
+      localStorage.setItem('userId', user.firebaseId);
+      dispatch(setCurrentUser(user));
+      dispatch(setLoginStatus(true));
       navigate('/user_profile');
+    } else {
+      onError(errorMessage);
     }
   };
 

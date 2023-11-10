@@ -1,47 +1,39 @@
-import { Dispatch, SetStateAction } from 'react';
-
 import { auth } from '../../../config/firebase';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { AuthError, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { FirebaseUser } from '../../../types/userTypes';
 
 const provider = new GoogleAuthProvider();
 
-export const signInWithGoogle = async (setToken: Dispatch<SetStateAction<string>>) => {
+export type RequestResult = AuthError | FirebaseUser;
+
+export const signInWithGoogle = async (): Promise<RequestResult> => {
   try {
     const result = await signInWithPopup(auth, provider);
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const accessToken = credential?.accessToken;
-    if (!accessToken) throw new Error('No access token found');
-
     const { displayName, email, photoURL, uid: firebaseId } = result.user;
-
-    localStorage.setItem('accessToken', accessToken || '');
-    localStorage.setItem('firebaseId', firebaseId || '');
-    setToken(accessToken || '');
 
     const firstName = displayName?.split(' ')[0];
     const lastName = displayName?.split(' ')[-1];
 
     return {
-      displayName,
+      displayName: displayName || '',
       firstName,
-      email,
+      email: email || '',
       lastName,
-      photoURL,
-      firebaseId
+      photoURL: photoURL || '',
+      firebaseId,
+      accessToken,
     };
   } catch (error) {
-    // TODO: Find a better way to handle errors
-    console.log(error);
+    return error as AuthError;
   }
 }
 
-export const signOutFromGoogle = async (setToken: Dispatch<SetStateAction<string>>) => {
-  try {
-    await auth.signOut();
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('firebaseId');
-    setToken('');
-  } catch (error) {
-    console.log(error);
-  }
+export const isUser = (result: RequestResult) => {
+  return (result as FirebaseUser).accessToken !== undefined;
+}
+
+export const isAuthError = (result: RequestResult) => {
+  return (result as AuthError).code !== undefined;
 }

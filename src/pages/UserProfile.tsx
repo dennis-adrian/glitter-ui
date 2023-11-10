@@ -1,11 +1,11 @@
-import { useContext } from 'react';
-import { CurrentUserContext } from '../contexts';
 import SignOutButton from '../components/authentication/SignOutButton';
 import { redirect } from 'react-router-dom';
 import logo from '../assets/logo.png';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 
 const UserProfile = () => {
-  const { currentUser } = useContext(CurrentUserContext);
+  const currentUser = useSelector((state: RootState) => state.currentUser);
   if (!currentUser) redirect('/login');
 
   return (

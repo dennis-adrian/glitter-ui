@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom'
 
 import { AppRoutes } from './routes/AppRoutes'
-import { AuthContext, CurrentUserContext } from './contexts';
 import { FirebaseUser, User } from './types/userTypes';
 import { baseUrl } from './utils';
+import { setCurrentUser, setLoginStatus } from './store/features/currentUserSlice';
+import { useDispatch } from 'react-redux';
 
 const fetchUser = async (user: FirebaseUser) => {
   const response = await fetch(
@@ -14,30 +15,25 @@ const fetchUser = async (user: FirebaseUser) => {
 };
 
 function App() {
-  const [token, setToken] = useState(localStorage.getItem('accessToken') || '');
-  const [currentUser, setCurrentUser] = useState({} as User);
-  
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    const handleInitialLoad = async () => {
-      const firebaseId = localStorage.getItem('firebaseId');
-      if (firebaseId) {
-        const user = await fetchUser({ firebaseId } as FirebaseUser);
-        if (user) {
-          setCurrentUser(user as User);
-        }
-      }
-    }
+    const accessToken = localStorage.getItem('accessToken');
+    const userId = localStorage.getItem('userId');
 
-    handleInitialLoad();
-  }, []);
+    if (!(accessToken && userId)) return;
 
+    const fetchCurrentUser = async () => {
+      const user: User = await fetchUser({ firebaseId: userId } as FirebaseUser);
+      dispatch(setCurrentUser(user));
+      dispatch(setLoginStatus(true));
+    };
+
+    fetchCurrentUser();
+  }, [dispatch]);
 
   return (
-    <AuthContext.Provider value={{ token, setToken }}>
-      <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
-        <RouterProvider router={AppRoutes} />
-      </CurrentUserContext.Provider>
-    </AuthContext.Provider>
+    <RouterProvider router={AppRoutes} />
   )
 }
 
