@@ -1,26 +1,42 @@
-import festivalMap from '../assets/cba_map.png';
+import festivalMap from '../assets/cba_gallery.png';
 import StandPosition from '../components/Stand';
-import { Stand } from '../types/eventMapTypes';
 
 const NextFestivalPage = () => {
   const stands = [
-    { stantNumber: 1, left: 34, top: 73.5, isHorizontal: false, isAvailable: true },
-    { standNumber: 2, left: 32, top: 68, isHorizontal: true, isAvailable: false },
-  ] as Stand[];
+    {
+      standNumber: 1,
+      left: 28,
+      top: 0,
+      isHorizontal: false,
+      isAvailable: false,
+    },
+    {
+      standNumber: 2,
+      left: 30,
+      top: 90.48,
+      isHorizontal: true,
+      isAvailable: false,
+    },
+  ];
 
   return (
-    <div>
-      <img src={festivalMap} alt="mapa del proximo evento" useMap="#eventMap" />
-      <map name="eventMap">
-        {stands.map((stand) => (
-          <StandPosition
-            key={stand.standNumber}
-            {...stand}
-          />
-        ))}
-      </map>
-    </div>
-  )
-}
+    <>
+      <div className="m-auto max-w-screen-md">
+        <div className="relative">
+          <section className="flex justify-center w-100 m-auto">
+            <img
+              id="galleryMap"
+              src={festivalMap}
+              alt="mapa del proximo evento"
+            />
+          </section>
+          {stands.map((stand) => (
+            <StandPosition key={stand.standNumber} {...stand} />
+          ))}
+        </div>
+      </div>
+    </>
+  );
+};
 
-export default NextFestivalPage
+export default NextFestivalPage;

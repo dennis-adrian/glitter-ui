@@ -1,8 +1,7 @@
 export type Stand = {
-  standNumber: number;
+  isAvailable: boolean;
+  isHorizontal: boolean;
   left: number;
   top: number;
-  label: string;
-  isHorizontal: boolean;
-  isAvailable: boolean;
+  standNumber: number;
 };

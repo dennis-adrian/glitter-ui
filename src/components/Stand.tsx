@@ -1,30 +1,58 @@
+import { useState, useEffect } from 'react';
 import { CSSProperties } from 'react';
+import { Stand } from '../types/eventMapTypes';
 
-type Props = {
-  standNumber: number;
-  label: string;
-  left: number;
-  top: number;
-  isHorizontal: boolean;
-  isAvailable: boolean;
+type Props = Stand;
+type ElementSize = {
+  width: number;
+  height: number;
 };
+
 const Stand = ({
   isHorizontal,
   isAvailable,
-  label,
   left,
   top,
   standNumber,
 }: Props) => {
+  const [size, setSize] = useState<ElementSize>({
+    width: 0,
+    height: 0,
+  });
+
   const handleSeatClick = (standNumber: number) => {
     console.log(`Seat number ${standNumber} clicked`);
   };
+
+  useEffect(() => {
+    const updateStands = async () => {
+      const mapImg = document.getElementById('galleryMap');
+      if (mapImg) {
+        const { width: imgWidth, height: imgHeight } =
+          mapImg.getBoundingClientRect();
+        const size = {
+          width: imgWidth * 0.072,
+          height: imgHeight * 0.0698,
+        };
+        setSize(size);
+      }
+    };
+
+    window.addEventListener('resize', updateStands);
+    updateStands();
+
+    return () => {
+      window.removeEventListener('resize', updateStands);
+    };
+  }, []);
 
   const style: CSSProperties = {
     position: 'absolute',
     left: `${left}%`,
     top: `${top}%`,
     cursor: 'pointer',
+    height: `${size?.height}px`,
+    width: `${size?.width}px`,
   };
 
   const bgColor = isAvailable
@@ -34,13 +62,11 @@ const Stand = ({
 
   return (
     <div
-      className={`${bgColor} ${shape} bg-opacity-60 w-14 h-6`}
+      className={`${bgColor} ${shape} bg-opacity-60`}
       key={standNumber}
       style={style}
       onClick={() => handleSeatClick(standNumber)}
-    >
-      {label}
-    </div>
+    />
   );
 };
 
