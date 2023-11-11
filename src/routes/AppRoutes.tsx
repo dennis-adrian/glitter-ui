@@ -22,7 +22,7 @@ export const AppRoutes = createBrowserRouter([
     element: <LoginPage />,
   },
   {
-    path: '/siguiente_evento',
+    path: '/next_event',
     element: <NextFestivalPage />,
   }
 ])

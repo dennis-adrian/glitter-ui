@@ -1,12 +1,8 @@
 import { useState, useEffect } from 'react';
 import { CSSProperties } from 'react';
-import { Stand } from '../types/eventMapTypes';
+import { ElementSize, Stand } from '../types/eventMapTypes';
 
 type Props = Stand;
-type ElementSize = {
-  width: number;
-  height: number;
-};
 
 const Stand = ({
   isHorizontal,
@@ -31,8 +27,10 @@ const Stand = ({
         const { width: imgWidth, height: imgHeight } =
           mapImg.getBoundingClientRect();
         const size = {
-          width: imgWidth * 0.072,
-          height: imgHeight * 0.0698,
+          // width: imgWidth * 0.072,
+          // height: imgHeight * 0.0698,
+          width: imgWidth * 0.089,
+          height: imgHeight * 0.059,
         };
         setSize(size);
       }
