@@ -4,7 +4,8 @@ import { isUser, signInWithGoogle } from './helpers';
 import UserInfoModal from '../UserInfoModal';
 import { setCurrentUser, setCurrentUserAccessToken } from '../../store/features/currentUserSlice';
 import { useDispatch } from 'react-redux';
-import { FirebaseUser } from '../../types/userTypes';
+import { FirebaseUser, User } from '../../types/userTypes';
+import { fetchUser } from '../../api/helpers';
 
 type Props = {
   onError: Dispatch<React.SetStateAction<string>>;
@@ -21,6 +22,12 @@ const SignUpButton = ({ onError }: Props) => {
 
       if (isUser(result)) {
         accessToken = (result as FirebaseUser).accessToken as string;
+        const existingUser = await fetchUser((result as FirebaseUser).firebaseId as string);
+
+        if ((existingUser as User).id) {
+          return onError('Ya existe una cuenta con este correo electrónico');
+        }
+
         dispatch(setCurrentUser(result));
         dispatch(setCurrentUserAccessToken(accessToken));
 

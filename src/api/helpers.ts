@@ -27,3 +27,10 @@ export const postUser = async (data: CurrentUserState) => {
   const createdUser = await res.json();
   return createdUser;
 };
+
+export const fetchUser = async (id: string) => {
+  const url = `${baseUrl}/users/${id}`;
+  const res = await fetch(url);
+  const user = await res.json();
+  return user;
+}
