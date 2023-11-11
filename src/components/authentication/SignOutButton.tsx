@@ -1,13 +1,13 @@
 import { useDispatch } from 'react-redux';
-import { setCurrentUserAccessToken, setLoginStatus } from '../../store/features/currentUserSlice';
+import { removeAccessToken, removeCurrentUser, setLoginStatus } from '../../store/features/currentUserSlice';
 
 const SignOutButton = () => {
   const dispatch = useDispatch();
 
   const handleSingOut = () => {
     dispatch(setLoginStatus(false));
-    dispatch(setCurrentUserAccessToken(''));
-    localStorage.removeItem('accessToken');
+    dispatch(removeAccessToken());
+    dispatch(removeCurrentUser());
     localStorage.removeItem('userId');
   }
 

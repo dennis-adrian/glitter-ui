@@ -84,6 +84,10 @@ export const currentUserSlice = createSlice({
       state.accessToken = '';
       localStorage.removeItem('accessToken');
     },
+    removeCurrentUser: () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      return initialState;
+    }
   },
 });
 
@@ -93,6 +97,7 @@ export const {
   setLoginStatus,
   updateUserProperty,
   removeAccessToken,
+  removeCurrentUser,
 } = currentUserSlice.actions;
 
 export default currentUserSlice.reducer;
