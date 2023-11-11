@@ -6,14 +6,14 @@ type Props = {
 
 const SelectField = ({ label, options, required }: Props) => {
   return (
-    <div className="form-control w-full max-w-xs">
+    <div className="form-control w-full">
       <label className="label">
         <span className="label-text">
           {label}
           <span className="text-red-500">{required && ' *'}</span>
         </span>
       </label>
-      <select className="select select-primary w-full max-w-xs">
+      <select className="select select-primary w-full">
         <option disabled selected>
           Selecciona un opción
         </option>

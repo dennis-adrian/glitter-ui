@@ -22,11 +22,11 @@ const LoginPage = () => {
           <img src={logo} alt='glitter logo' />
         </div>
       </div>
-      <ErrorAlert message={errorMessage} onTimeUp={() => setErrorMessage('')} />
       <div>
         <SignUpButton onError={setErrorMessage} />
         <SignInButton onError={setErrorMessage} />
       </div>
+      <ErrorAlert message={errorMessage} onTimeUp={() => setErrorMessage('')} />
     </div>
   )
 }

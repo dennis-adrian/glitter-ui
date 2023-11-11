@@ -11,7 +11,7 @@ const ErrorAlert = ({ message, onTimeUp }: Props) => {
   }, 5000);
 
   return (
-    <div className="alert alert-error mb-4">
+    <div className="alert alert-error mt-4">
       <span>{message}</span>
     </div>
   );

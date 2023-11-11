@@ -30,7 +30,7 @@ const SignInButton = ({ onError }: Props) => {
       const accessToken = (result as FirebaseUser).accessToken;
       const user: User = await fetchUser(result as FirebaseUser);
       if (!user.id) {
-        onError(errorMessage);
+        return onError(errorMessage);
       }
 
       dispatch(setCurrentUserAccessToken(accessToken));

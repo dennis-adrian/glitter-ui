@@ -1,49 +1,47 @@
-import { Dispatch, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Dispatch } from 'react';
 
-import { signInWithGoogle, signOutFromGoogle } from './helpers';
-import { AuthContext } from '../../contexts';
+import { isUser, signInWithGoogle } from './helpers';
+import UserInfoModal from '../UserInfoModal';
+import { setCurrentUser, setCurrentUserAccessToken } from '../../store/features/currentUserSlice';
+import { useDispatch } from 'react-redux';
 import { FirebaseUser } from '../../types/userTypes';
-import { baseUrl } from '../../utils';
-
-const postUser = async (user: FirebaseUser) => {
-  const response = await fetch(`${baseUrl}/users`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ ...user, isArtist: true }),
-  });
-  return response.json();
-};
 
 type Props = {
   onError: Dispatch<React.SetStateAction<string>>;
 };
 
 const SignUpButton = ({ onError }: Props) => {
-  const { setToken } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const errorMessage = 'No se pudo crear la cuenta. Intente de nuevo.';
+  let accessToken = '';
 
   const handleSignUp = async () => {
-    const result = await signInWithGoogle(setToken);
     try {
-      const res = await postUser(result as FirebaseUser);
-      if (!res?.id) {
-        signOutFromGoogle(setToken);
-        onError(errorMessage);
-      }
+      const result = await signInWithGoogle();
 
-      navigate('/user_profile');
+      if (isUser(result)) {
+        accessToken = (result as FirebaseUser).accessToken as string;
+        dispatch(setCurrentUser(result));
+        dispatch(setCurrentUserAccessToken(accessToken));
+
+        const modal = document.getElementById('my_modal_1') as HTMLDialogElement;
+        modal?.showModal();
+      } else {
+        onError(errorMessage)
+      }
+      
     } catch (error) {
-      signOutFromGoogle(setToken);
       onError(errorMessage);
     }
   };
 
   return (
-    <button className="btn btn-block btn-primary" onClick={handleSignUp}>
-      Crear cuenta
-    </button>
+    <>
+      <button className="btn btn-block btn-primary" onClick={handleSignUp}>
+        Crear cuenta
+      </button>
+      <UserInfoModal />
+    </>
   );
 };
 

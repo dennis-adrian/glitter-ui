@@ -1,10 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { User } from '../../types/userTypes';
 
-export type CurrentUserState = User & {
+export interface CurrentUserState extends User {
   accessToken?: string;
-  isLoggedIn: boolean;
-};
+  isLoggedIn?: boolean;
+}
 
 const initialState = {
   id: 0,
@@ -65,13 +65,34 @@ export const currentUserSlice = createSlice({
     },
     setCurrentUserAccessToken: (state, action) => {
       state.accessToken = action.payload;
+      localStorage.setItem('accessToken', action.payload);
     },
     setLoginStatus: (state, action) => {
       state.isLoggedIn = action.payload;
-    }
+    },
+    updateUserProperty: (
+      state,
+      action: PayloadAction<{
+        field: keyof CurrentUserState;
+        value: string | boolean | number;
+      }>,
+    ) => {
+      const { field, value } = action.payload;
+      state[field] = value as never;
+    },
+    removeAccessToken: (state) => {
+      state.accessToken = '';
+      localStorage.removeItem('accessToken');
+    },
   },
 });
 
-export const { setCurrentUser, setCurrentUserAccessToken, setLoginStatus } = currentUserSlice.actions;
+export const {
+  setCurrentUser,
+  setCurrentUserAccessToken,
+  setLoginStatus,
+  updateUserProperty,
+  removeAccessToken,
+} = currentUserSlice.actions;
 
 export default currentUserSlice.reducer;

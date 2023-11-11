@@ -8,8 +8,8 @@ export type FirebaseUser = {
   firebaseId?: string;
 }
 
-export type User = {
-  id: number;
+export interface User {
+  id?: number;
   firstName?: string;
   lastName?: string;
   displayName: string;
