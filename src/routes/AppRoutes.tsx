@@ -5,6 +5,7 @@ import ErrorPage from '../pages/Error';
 import HomePage from '../pages/Home';
 import LoginPage from '../pages/Login';
 import UserProfile from '../pages/UserProfile';
+import NextFestivalPage from '../pages/NextFestival';
 
 export const AppRoutes = createBrowserRouter([
   {
@@ -19,5 +20,9 @@ export const AppRoutes = createBrowserRouter([
   {
     path: '/login',
     element: <LoginPage />,
+  },
+  {
+    path: '/siguiente_evento',
+    element: <NextFestivalPage />,
   }
 ])

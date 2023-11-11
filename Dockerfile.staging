@@ -1,4 +1,4 @@
-# docker build -t registry.gitlab.com/garabatosdepandora/glitter/glitter-ui-staging .
+# docker build -t registry.gitlab.com/garabatosdepandora/glitter/glitter-ui-staging -f Dockefile.staging.
 # docker push registry.gitlab.com/garabatosdepandora/glitter/glitter-ui-staging
 
 # Stage 1 - the build process
