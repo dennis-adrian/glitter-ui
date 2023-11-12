@@ -20,7 +20,9 @@ const UserItem = () => {
         className="mt-3 z-20 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
       >
         <MenuItem label="Ver perfil" path="/user_profile" />
-        <MenuItem label="Dashboard" path="/dashboard" />
+        {currentUser.isAdmin && (
+          <MenuItem label="Dashboard" path="/dashboard" />
+        )}
         <SignOutButton />
       </ul>
     </div>

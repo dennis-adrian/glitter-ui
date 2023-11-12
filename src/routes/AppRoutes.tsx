@@ -35,7 +35,7 @@ export const AppRoutes = createBrowserRouter([
       },
       {
         path: 'dashboard',
-        element: <ProtectedRoute component={DashboardPage} />,
+        element: <ProtectedRoute component={DashboardPage} forAdmin />,
         loader: userLoader,
       },
     ],
