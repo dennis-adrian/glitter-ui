@@ -7,6 +7,7 @@ import LoginPage from '../pages/Login';
 import UserProfile from '../pages/UserProfile';
 import NextFestivalPage from '../pages/NextFestival';
 import { userLoader } from './loaders/userLoader';
+import DashboardPage from '../pages/Dashboard';
 
 export const AppRoutes = createBrowserRouter([
   {
@@ -26,5 +27,10 @@ export const AppRoutes = createBrowserRouter([
   {
     path: '/next_event',
     element: <NextFestivalPage />,
-  }
-])
+  },
+  {
+    path: 'dashboard',
+    element: <ProtectedRoute component={DashboardPage} />,
+    loader: userLoader,
+  },
+]);
