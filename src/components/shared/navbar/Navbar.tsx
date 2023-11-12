@@ -1,7 +1,9 @@
-import { NavLink } from 'react-router-dom';
 import logo from '../../../assets/logo.png';
 import MobileDropdown from './MobileDropdown';
 import { Link } from 'react-router-dom';
+import UserItem from './UserItem';
+import { menuItems } from './config/menu-items';
+import MenuItem from './MenuItem';
 
 const Navbar = () => {
   return (
@@ -9,38 +11,20 @@ const Navbar = () => {
       <div className="navbar-start">
         <MobileDropdown />
         <Link to="/">
-          <div tabIndex={0} className="avatar">
-            <div className="w-12 rounded-full">
+          <div className="w-16" tabIndex={0}>
               <img src={logo} alt="glitter logo" />
-            </div>
           </div>
-        </ Link>
-        <div className="hidden lg:flex">
+        </Link>
+      </div>
+      <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
-            <li>
-              <NavLink to="/"></NavLink>
-            </li>
-            <li tabIndex={0}>
-              <details>
-                <summary>Parent</summary>
-                <ul className="p-2">
-                  <li>
-                    <a>Submenu 1</a>
-                  </li>
-                  <li>
-                    <a>Submenu 2</a>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <a>Item 3</a>
-            </li>
+            {menuItems.map((item) => (
+              <MenuItem key={item.label} label={item.label} path={item.path} />
+            ))}
           </ul>
         </div>
-      </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        <UserItem />
       </div>
     </div>
   );

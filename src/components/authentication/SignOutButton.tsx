@@ -1,5 +1,9 @@
 import { useDispatch } from 'react-redux';
-import { removeAccessToken, removeCurrentUser, setLoginStatus } from '../../store/features/currentUserSlice';
+import {
+  removeAccessToken,
+  removeCurrentUser,
+  setLoginStatus,
+} from '../../store/features/currentUserSlice';
 import { useNavigate } from 'react-router-dom';
 
 const SignOutButton = () => {
@@ -12,15 +16,12 @@ const SignOutButton = () => {
     dispatch(removeCurrentUser());
     localStorage.removeItem('userId');
     return navigate('/');
-  }
+  };
 
   return (
-    <button
-      className="btn btn-outline btn-secondary m-2"
-      onClick={handleSingOut}
-    >
-      Cerrar sesión
-    </button>
+    <li>
+      <button onClick={handleSingOut}>Cerrar sesión</button>
+    </li>
   );
 };
 

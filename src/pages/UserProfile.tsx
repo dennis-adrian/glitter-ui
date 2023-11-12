@@ -1,6 +1,4 @@
-import SignOutButton from '../components/authentication/SignOutButton';
 import { redirect } from 'react-router-dom';
-import logo from '../assets/logo.png';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 
@@ -10,18 +8,6 @@ const UserProfile = () => {
 
   return (
     <div className='h-screen'>
-      <div className="navbar bg-base-100">
-        <div className="navbar-start">
-          <div className="avatar">
-            <div className="w-16 rounded-full">
-              <img src={logo} alt="glitter logo" />
-            </div>
-          </div>
-        </div>
-        <div className="navbar-end">
-          <SignOutButton />
-        </div>
-      </div>
       <div className='flex items-center justify-center flex-col h-4/5 mx-auto'>
         <h1>Bienvenido a la comunidad Glitter {currentUser?.displayName}</h1>
         <div className='avatar'>

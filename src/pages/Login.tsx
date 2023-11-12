@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { useNavigate } from 'react-router-dom';
 
-import logo from '../assets/logo.png';
+import logo from '../assets/logo_with_background.png';
 import SignInButton from '../components/authentication/SignInButton';
 import SignUpButton from '../components/authentication/SignUpButton';
 import ErrorAlert from '../components/shared/ErrorAlert';
