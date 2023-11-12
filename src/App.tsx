@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
-import { RouterProvider } from 'react-router-dom'
 
-import { AppRoutes } from './routes/AppRoutes'
+import { Outlet } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setCurrentUser, setLoginStatus } from './store/features/currentUserSlice';
+
+import Navbar from './components/shared/navbar/Navbar';
 import { FirebaseUser, User } from './types/userTypes';
 import { baseUrl } from './utils';
-import { setCurrentUser, setLoginStatus } from './store/features/currentUserSlice';
-import { useDispatch } from 'react-redux';
 
 const fetchUser = async (user: FirebaseUser) => {
   const response = await fetch(
@@ -33,7 +34,10 @@ function App() {
   }, [dispatch]);
 
   return (
-    <RouterProvider router={AppRoutes} />
+    <>
+      <Navbar />
+      <Outlet />
+    </>
   )
 }
 
