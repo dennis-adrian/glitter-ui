@@ -6,6 +6,7 @@ import HomePage from '../pages/Home';
 import LoginPage from '../pages/Login';
 import UserProfile from '../pages/UserProfile';
 import NextFestivalPage from '../pages/NextFestival';
+import { userLoader } from './loaders/userLoader';
 
 export const AppRoutes = createBrowserRouter([
   {
@@ -16,6 +17,7 @@ export const AppRoutes = createBrowserRouter([
   {
     path: '/user_profile',
     element: <ProtectedRoute component={UserProfile} />,
+    loader: userLoader,
   },
   {
     path: '/login',

@@ -1,14 +1,12 @@
-import { Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import type { RootState } from '../store';
+import { Navigate, useLoaderData } from 'react-router-dom';
 
 type Props = {
   component: React.ComponentType;
 };
 
 export const ProtectedRoute = ({ component: Component }: Props) => {
-  const { isLoggedIn } = useSelector((state: RootState) => state.currentUser);
-  if (!isLoggedIn) {
+  const loaderData = useLoaderData();
+  if (!loaderData) {
     return <Navigate to="/login" />;
   }
 
