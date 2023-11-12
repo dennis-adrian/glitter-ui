@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import festivalMap from '../assets/cba_gallery.png';
 import Stand from '../components/Stand';
 import { cbaGalleryPositionsV1 } from '../components/utils/standPositions';
@@ -5,6 +6,7 @@ import { StandPosition } from '../types/eventMapTypes';
 import { demoStands } from '../utils/demoStands';
 
 const NextFestivalPage = () => {
+  const [mapLoaded, setMapLoaded] = useState(false);
   const stands = demoStands;
 
   return (
@@ -16,9 +18,10 @@ const NextFestivalPage = () => {
               id="galleryMap"
               src={festivalMap}
               alt="mapa del proximo evento"
+              onLoad={() => setMapLoaded(true)}
             />
           </section>
-          {stands.map((stand) => {
+          {mapLoaded && stands.map((stand) => {
             const position = cbaGalleryPositionsV1.find(
               (position: StandPosition) => position.id === stand.standNumber,
             );
