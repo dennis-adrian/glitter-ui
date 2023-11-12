@@ -19,7 +19,10 @@ const DashboardPage = () => {
 
   return (
     <>
-      <h1>Festivales</h1>
+      <h1 className="text-3xl my-4">Festivales</h1>
+      <div className="flex justify-end">
+        <button className="btn btn-primary m-4">Crear Festival</button>
+      </div>
       <div className="overflow-x-auto">
         <table className="table">
           <thead>
@@ -29,6 +32,7 @@ const DashboardPage = () => {
               <th>Fecha de Inicio</th>
               <th>Fecha Final</th>
               <th>Lugar</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -40,6 +44,7 @@ const DashboardPage = () => {
                   <td>{formatDateWithTime(festival.startDate)}</td>
                   <td>{formatDateWithTime(festival.endDate)}</td>
                   <td className="truncate">{festival.location}</td>
+                  <td>Actions</td>
                 </tr>
               ))
             )}
