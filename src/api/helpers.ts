@@ -34,3 +34,9 @@ export const getUser = async (id: string) => {
   const user = await res.json();
   return user;
 }
+
+export const get = async (resource: string) => {
+  const res = await fetch(`${baseUrl}/${resource}`);
+  const data = await res.json();
+  return data;
+}
