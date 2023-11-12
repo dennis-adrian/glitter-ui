@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 import { CSSProperties } from 'react';
-import { ElementSize, Stand } from '../types/eventMapTypes';
+import { ElementSize, StandModel } from '../types/eventMapTypes';
 
-type Props = Stand;
+type Props = StandModel;
 
 const Stand = ({
-  isHorizontal,
-  isAvailable,
   left,
+  orientation,
   top,
   standNumber,
+  status,
 }: Props) => {
   const [size, setSize] = useState<ElementSize>({
     width: 0,
@@ -53,14 +53,20 @@ const Stand = ({
     width: `${size?.width}px`,
   };
 
-  const bgColor = isAvailable
-    ? 'hover:bg-amber-300 hover:bg-opacity-60'
-    : 'bg-emerald-200 hover:bg-emerald-400 hover:bg-opacity-60';
-  const shape = isHorizontal ? '' : 'rotate-[270deg]';
+  let bgColor = 'hover:bg-opacity-60 ';
+  if (status === 'RESERVED') {
+    bgColor += 'bg-emerald-200 hover:bg-emerald-400'
+  } else if (status === 'SOLD') {
+    bgColor += 'bg-fuchsia-600 hover:bg-fuchsia-800'
+  } else {
+    bgColor += 'hover:bg-accent hover:bg-opacity-60'
+  }
+
+  const shape = orientation === 'HORIZONTAL' ? '' : 'rotate-[270deg]';
 
   return (
     <div
-      className={`${bgColor} ${shape} bg-opacity-60`}
+      className={`${bgColor} ${shape} bg-opacity-50`}
       key={standNumber}
       style={style}
       onClick={() => handleSeatClick(standNumber)}

@@ -1,9 +1,13 @@
-export type Stand = {
-  isAvailable: boolean;
-  isHorizontal: boolean;
+export type StandOrientation = 'HORIZONTAL' | 'VERTICAL';
+type StandStatus = 'AVAILABLE' | 'RESERVED' | 'SOLD';
+
+export type StandModel = {
+  label?: string;
   left?: number;
-  top?: number;
+  orientation: StandOrientation;
   standNumber: number;
+  status: StandStatus
+  top?: number;
 };
 
 export type ElementSize = {
