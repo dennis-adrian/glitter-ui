@@ -11,8 +11,8 @@ export type StandModel = {
 };
 
 export type ElementSize = {
-  width: number;
-  height: number;
+  wide: number;
+  narrow: number;
 };
 
 export type StandPosition = {

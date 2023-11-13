@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { CSSProperties } from 'react';
 import { ElementSize, StandModel } from '../types/eventMapTypes';
+import StandContent from './StandContent';
 
 type Props = StandModel;
 
 const Stand = ({
+  label,
   left,
   orientation,
   top,
@@ -12,10 +14,9 @@ const Stand = ({
   status,
 }: Props) => {
   const [size, setSize] = useState<ElementSize>({
-    width: 0,
-    height: 0,
+    wide: 0,
+    narrow: 0,
   });
-
   const handleSeatClick = (standNumber: number) => {
     console.log(`Seat number ${standNumber} clicked`);
   };
@@ -27,10 +28,8 @@ const Stand = ({
         const { width: imgWidth, height: imgHeight } =
           mapImg.getBoundingClientRect();
         const size = {
-          // width: imgWidth * 0.072,
-          // height: imgHeight * 0.0698,
-          width: imgWidth * 0.089,
-          height: imgHeight * 0.059,
+          wide: (imgWidth * 0.089) || 0,
+          narrow: (imgHeight * 0.059) || 0,
         };
         setSize(size);
       }
@@ -49,8 +48,8 @@ const Stand = ({
     left: `${left}%`,
     top: `${top}%`,
     cursor: 'pointer',
-    height: `${size?.height}px`,
-    width: `${size?.width}px`,
+    height: `${orientation === 'HORIZONTAL'? size.narrow : size.wide}px`,
+    width: `${orientation === 'HORIZONTAL' ? size.wide : size.narrow}px`,
   };
 
   let bgColor = 'hover:bg-opacity-60 ';
@@ -62,15 +61,15 @@ const Stand = ({
     bgColor += 'hover:bg-accent hover:bg-opacity-60'
   }
 
-  const shape = orientation === 'HORIZONTAL' ? '' : 'rotate-[270deg]';
-
   return (
     <div
-      className={`${bgColor} ${shape} bg-opacity-50`}
+      className={`${bgColor} bg-opacity-50`}
       key={standNumber}
       style={style}
       onClick={() => handleSeatClick(standNumber)}
-    />
+    >
+      <StandContent label={label || ''} standNumber={standNumber} status={status} />
+    </div>
   );
 };
 
