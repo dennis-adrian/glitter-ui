@@ -1,3 +1,4 @@
+import { SyntheticEvent } from "react";
 import { User } from "../../types/userTypes";
 
 export type SearchOption = User;
@@ -5,9 +6,10 @@ export type SearchOption = User;
 type Props = {
   show: boolean;
   options?: SearchOption[] | undefined;
+  onSelect: (e: SyntheticEvent<HTMLLIElement>) => void;
 };
 
-const SearchContent = ({ show, options }: Props) => {
+const SearchContent = ({ show, options, onSelect }: Props) => {
   let items;
   if (!options?.length) {
     items = (
@@ -17,7 +19,7 @@ const SearchContent = ({ show, options }: Props) => {
     );
   } else {
     items = options!.map((option) => (
-      <li key={option.id}>
+      <li key={option.id} value={option.id} onClick={onSelect}>
         <span>{option.displayName}</span>
       </li>
     ));

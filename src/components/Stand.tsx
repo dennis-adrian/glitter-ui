@@ -72,7 +72,7 @@ const Stand = ({
         <StandContent label={label || ''} standNumber={standNumber} status={status} />
       </div>
       <Modal show={showModal} title={`Stand ${label}${standNumber}`} onClose={() => setShowModal(false)}>
-        <ReservationForm />
+        <ReservationForm onCancel={() => setShowModal(false)} />
       </Modal>
     </>
   );
