@@ -25,7 +25,12 @@ const NextFestivalPage = () => {
 
   return (
     <>
-      <div className="m-auto max-w-md">
+      <section className="mb-6">
+        <h1 className="text-3xl my-4 text-center">Mapa del Evento</h1>
+        <h2 className="text-2xl my-4 text-center">1 y 2 de diciembre</h2>
+      </section>
+      <div className="m-auto max-w-md p-1">
+        <h3 className="text-xl m-3">Distribución de la galería</h3>
         <div className="relative">
           <section className="flex justify-center w-100 m-auto">
             <img

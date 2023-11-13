@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { CSSProperties } from 'react';
 import { ElementSize, StandModel } from '../types/eventMapTypes';
 import StandContent from './StandContent';
+import Modal from './shared/Modal';
+import ReservationForm from './form/ReservationForm';
 
 type Props = StandModel;
 
@@ -17,9 +19,7 @@ const Stand = ({
     wide: 0,
     narrow: 0,
   });
-  const handleSeatClick = (standNumber: number) => {
-    console.log(`Seat number ${standNumber} clicked`);
-  };
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const updateStands = async () => {
@@ -62,14 +62,19 @@ const Stand = ({
   }
 
   return (
-    <div
-      className={`${bgColor} bg-opacity-50`}
-      key={standNumber}
-      style={style}
-      onClick={() => handleSeatClick(standNumber)}
-    >
-      <StandContent label={label || ''} standNumber={standNumber} status={status} />
-    </div>
+    <>
+      <div
+        className={`${bgColor} bg-opacity-50`}
+        key={standNumber}
+        style={style}
+        onClick={() => setShowModal(true)}
+      >
+        <StandContent label={label || ''} standNumber={standNumber} status={status} />
+      </div>
+      <Modal show={showModal} title={`Stand ${label}${standNumber}`} onClose={() => setShowModal(false)}>
+        <ReservationForm />
+      </Modal>
+    </>
   );
 };
 
