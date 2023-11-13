@@ -1,7 +1,7 @@
 export type FestivalStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED'
 
 export type Festival = {
-  id: number;
+  id?: number;
   name: string;
   description?: string;
   startDate: string;

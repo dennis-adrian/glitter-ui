@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import currentUserReducer from './features/currentUserSlice';
+import activeFestivalReducer from './features/festivalsSlice';
 
 export const store = configureStore({
   reducer: {
     currentUser: currentUserReducer,
+    activeFestival: activeFestivalReducer,
   },
 });
 

@@ -35,8 +35,9 @@ export const getUser = async (id: string) => {
   return user;
 }
 
-export const get = async (resource: string) => {
-  const res = await fetch(`${baseUrl}/${resource}`);
+export const get = async (resource: string, params: object) => {
+  const formattedParams = Object.entries(params).map(([key, value]) => `${key}=${value}`).join('&');
+  const res = await fetch(`${baseUrl}/${resource}?${formattedParams}`);
   const data = await res.json();
   return data;
 }
