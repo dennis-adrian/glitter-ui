@@ -18,7 +18,6 @@ const initialState = {
   firebaseId: '',
   photoURL: '',
   isCustomPhoto: false,
-  isApproved: false,
   instagramProfile: '',
   isAdmin: false,
   isArtist: false,
@@ -42,7 +41,6 @@ export const currentUserSlice = createSlice({
         firebaseId,
         photoURL,
         isCustomPhoto,
-        isApproved,
         instagramProfile,
         isAdmin,
         isArtist,
@@ -58,7 +56,6 @@ export const currentUserSlice = createSlice({
       state.firebaseId = firebaseId;
       state.photoURL = photoURL;
       state.isCustomPhoto = isCustomPhoto;
-      state.isApproved = isApproved;
       state.instagramProfile = instagramProfile;
       state.isAdmin = isAdmin;
       state.isArtist = isArtist;

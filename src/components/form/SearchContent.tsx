@@ -1,25 +1,24 @@
-export type SearchOption = {
-  value: string;
-  label: string;
-};
+import { User } from "../../types/userTypes";
+
+export type SearchOption = User;
 
 type Props = {
   show: boolean;
-  searchOptions?: SearchOption[];
+  options?: SearchOption[] | undefined;
 };
 
-const SearchContent = ({ show, searchOptions }: Props) => {
+const SearchContent = ({ show, options }: Props) => {
   let items;
-  if (!searchOptions?.length) {
+  if (!options?.length) {
     items = (
       <li className="disabled">
         <span>No se encontraron resultados</span>
       </li>
     );
   } else {
-    items = searchOptions!.map((option) => (
-      <li className="text-indigo-500" key={option.value}>
-        <span>{option.label}</span>
+    items = options!.map((option) => (
+      <li key={option.id}>
+        <span>{option.displayName}</span>
       </li>
     ));
   }

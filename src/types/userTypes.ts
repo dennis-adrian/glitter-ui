@@ -8,6 +8,7 @@ export type FirebaseUser = {
   firebaseId?: string;
 }
 
+export type UserStatus = 'ACTIVE' | 'WAITING_APPROVAL' | 'DISABLED'
 export interface User {
   id?: number;
   firstName?: string;
@@ -20,8 +21,8 @@ export interface User {
   firebaseId: string;
   photoURL: string;
   isCustomPhoto: boolean;
-  isApproved: boolean;
   instagramProfile: string;
   isAdmin: boolean;
   isArtist: boolean;
+  status: UserStatus;
 }

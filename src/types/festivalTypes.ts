@@ -1,3 +1,5 @@
+import { User } from "./userTypes";
+
 export type FestivalStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED'
 
 export type Festival = {
@@ -10,4 +12,5 @@ export type Festival = {
   locationURL?: string;
   logoURL?: string;
   status: FestivalStatus;
+  availableArtists?: User[];
 }
