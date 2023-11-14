@@ -79,7 +79,7 @@ const ReservationForm = ({
         <section className="form-control my-6 mx-2">
           <label className="label">
             <span className="text-indigo-500 label-text">
-              ¿Compartes stand?
+              ¿Compartes mesa?
             </span>
           </label>
           <input

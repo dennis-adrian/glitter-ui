@@ -26,7 +26,7 @@ type Props = {
 };
 
 const UserForm = ({ fields }: Props) => {
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('');
   const currentUser = useSelector((state: RootState) => state.currentUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -53,7 +53,9 @@ const UserForm = ({ fields }: Props) => {
       !currentUser.instagramProfile?.trim() ||
       !currentUser.phone?.trim()
     ) {
-      return setErrorMessage('Todos los campos obligatorios deben ser llenados');
+      return setErrorMessage(
+        'Todos los campos obligatorios deben ser llenados',
+      );
     }
 
     const res = await postUser(currentUser);
@@ -61,7 +63,7 @@ const UserForm = ({ fields }: Props) => {
     if (!res.id) {
       setErrorMessage('No se pudo crear la cuenta. Intente de nuevo.');
       removeAccessToken();
-      return
+      return;
     }
 
     dispatch(setCurrentUser(res));
@@ -84,7 +86,13 @@ const UserForm = ({ fields }: Props) => {
           />
         );
       })}
-      <input className="btn btn-primary mt-6" type="submit" value="Crear cuenta" />
+      <div className="flex justify-end w-full">
+        <input
+          className="btn btn-primary mt-6"
+          type="submit"
+          value="Crear cuenta"
+        />
+      </div>
       <ErrorAlert message={errorMessage} onTimeUp={() => setErrorMessage('')} />
     </form>
   );

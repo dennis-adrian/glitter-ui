@@ -1,17 +1,20 @@
 import { Dispatch } from 'react';
 
 import { isUser, signInWithGoogle } from './helpers';
-import UserInfoModal from '../UserInfoModal';
-import { setCurrentUser, setCurrentUserAccessToken } from '../../store/features/currentUserSlice';
+import {
+  setCurrentUser,
+  setCurrentUserAccessToken,
+} from '../../store/features/currentUserSlice';
 import { useDispatch } from 'react-redux';
 import { FirebaseUser, User } from '../../types/userTypes';
 import { getUser } from '../../api/helpers';
 
 type Props = {
   onError: Dispatch<React.SetStateAction<string>>;
+  onLoading: Dispatch<React.SetStateAction<boolean>>;
 };
 
-const SignUpButton = ({ onError }: Props) => {
+const SignUpButton = ({ onError, onLoading }: Props) => {
   const dispatch = useDispatch();
   const errorMessage = 'No se pudo crear la cuenta. Intente de nuevo.';
   let accessToken = '';
@@ -21,22 +24,23 @@ const SignUpButton = ({ onError }: Props) => {
       const result = await signInWithGoogle();
 
       if (isUser(result)) {
+        onLoading(true);
         accessToken = (result as FirebaseUser).accessToken as string;
-        const existingUser = await getUser((result as FirebaseUser).firebaseId as string);
+        const existingUser = await getUser(
+          (result as FirebaseUser).firebaseId as string,
+        );
 
         if ((existingUser as User).id) {
+          onLoading(false);
           return onError('Ya existe una cuenta con este correo electrónico');
         }
 
         dispatch(setCurrentUser(result));
         dispatch(setCurrentUserAccessToken(accessToken));
-
-        const modal = document.getElementById('my_modal_1') as HTMLDialogElement;
-        modal?.showModal();
+        onLoading(false);
       } else {
-        onError(errorMessage)
+        onError(errorMessage);
       }
-      
     } catch (error) {
       onError(errorMessage);
     }
@@ -47,7 +51,6 @@ const SignUpButton = ({ onError }: Props) => {
       <button className="btn btn-block btn-primary" onClick={handleSignUp}>
         Crear cuenta
       </button>
-      <UserInfoModal />
     </>
   );
 };
