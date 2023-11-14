@@ -22,7 +22,7 @@ const CbaPatioMap = ({ stands }: Props) => {
 
   return (
     <div className="m-auto max-w-md p-1 mt-4">
-      <h3 className="text-xl my-3">Distribución del patio</h3>
+      <h3 className="font-title text-xl my-3">Distribución del patio</h3>
       <div className="relative">
         <section className="flex justify-center w-100 m-auto">
           <img

@@ -23,7 +23,7 @@ const CbaGalleryMap = ({ stands }: Props) => {
 
   return (
     <div className="m-auto max-w-md p-1">
-      <h3 className="text-xl my-3">Distribución de la galería</h3>
+      <h3 className="font-title text-xl my-3">Distribución de la galería</h3>
       <div className="relative">
         <section className="flex justify-center w-100 m-auto">
           <img

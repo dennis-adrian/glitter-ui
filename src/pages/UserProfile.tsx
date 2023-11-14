@@ -75,7 +75,7 @@ const UserProfile = () => {
             <div className="card-body text-left">
               <div>
                 <span>
-                  El equipo de Glitter se comunicara contigo cuando tu cuenta
+                  El equipo de Glitter se comunicará contigo cuando tu cuenta
                   sea aprobada
                 </span>
               </div>
