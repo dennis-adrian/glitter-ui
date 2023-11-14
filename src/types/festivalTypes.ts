@@ -15,4 +15,5 @@ export type Festival = {
   status: FestivalStatus;
   availableArtists?: User[];
   stands?: StandModel[];
+  artistsWithoutReservation?: User[];
 }

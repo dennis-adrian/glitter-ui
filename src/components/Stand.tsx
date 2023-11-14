@@ -111,9 +111,10 @@ const Stand = ({ stand, left, top, type }: Props) => {
     if (currentUser.hasActiveReservation) return;
     if (status === 'RESERVED' || status === 'CONFIRMED') return;
     if (
-      !festival.availableArtists?.find((artist) => artist.id === currentUser.id)
-    )
+      !festival.artistsWithoutReservation?.find((artist) => artist.id === currentUser.id)
+    ) {
       return;
+    }
 
     setShowModal(true);
   };

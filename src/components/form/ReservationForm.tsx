@@ -14,9 +14,14 @@ type Props = {
   onTimeUp: () => void;
 };
 
-const ReservationForm = ({ errorMessage, onCancel, onConfirm, onTimeUp }: Props) => {
+const ReservationForm = ({
+  errorMessage,
+  onCancel,
+  onConfirm,
+  onTimeUp,
+}: Props) => {
   const artists: User[] | undefined = useSelector(
-    (state: RootState) => state.activeFestival.availableArtists,
+    (state: RootState) => state.activeFestival.artistsWithoutReservation,
   );
 
   const [searchText, setSearchText] = useState('');
@@ -27,7 +32,10 @@ const ReservationForm = ({ errorMessage, onCancel, onConfirm, onTimeUp }: Props)
   const handleSearch = (e: FormEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
     setSearchText(value);
-    const options = artists?.filter((artist, i) => {
+    const artistsWithoutCurrentUser = artists?.filter(
+      (artist) => artist.id !== user.id,
+    );
+    const options = artistsWithoutCurrentUser?.filter((artist, i) => {
       if (i > 4) return false;
       return artist.displayName.toLowerCase().includes(value.toLowerCase());
     });
