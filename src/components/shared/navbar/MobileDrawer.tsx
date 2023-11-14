@@ -18,7 +18,12 @@ const MobileDrawer = () => {
           </div>
         </Link>
         {menuItems.map((item) => (
-          <MenuItem key={item.label} label={item.label} path={item.path} />
+          <MenuItem
+            key={item.label}
+            isAdmin={item.isAdmin}
+            label={item.label}
+            path={item.path}
+          />
         ))}
       </ul>
     </div>
