@@ -46,6 +46,8 @@ export const currentUserSlice = createSlice({
         isAdmin,
         isArtist,
         hasActiveReservation,
+        status,
+        festivals,
       } = action.payload;
       state.id = id;
       state.firstName = firstName;
@@ -62,6 +64,8 @@ export const currentUserSlice = createSlice({
       state.isAdmin = isAdmin;
       state.isArtist = isArtist;
       state.hasActiveReservation = hasActiveReservation;
+      state.status = status;
+      state.festivals = festivals;
     },
     setCurrentUserAccessToken: (state, action) => {
       state.accessToken = action.payload;
