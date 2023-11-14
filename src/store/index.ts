@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import currentUserReducer from './features/currentUserSlice';
 import activeFestivalReducer from './features/festivalsSlice';
+import dashboardReducer from './features/dashboardSlice';
 import { apiSlice } from './features/api/apiSlice';
 
 export const store = configureStore({
   reducer: {
     currentUser: currentUserReducer,
     activeFestival: activeFestivalReducer,
+    dashboard: dashboardReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) => {

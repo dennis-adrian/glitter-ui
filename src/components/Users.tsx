@@ -1,4 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store';
+import { setSelectedUser } from '../store/features/dashboardSlice';
+
 import { User } from '../types/userTypes';
 import { get } from '../api/helpers';
 import Table from './shared/Table';
@@ -12,6 +16,8 @@ import ApprovalUserForm from './form/ApprovalUserForm';
 const Users = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [showModal, setShowModal] = useState(false);
+  const selectedUser = useSelector((state: RootState) => state.dashboard.selectedUser);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchAllUsers = async () => {
@@ -33,6 +39,11 @@ const Users = () => {
       case 'DISABLED':
         return 'badge-warning';
     }
+  };
+
+  const handleShowModal = (user: User) => {
+    setShowModal(true);
+    dispatch(setSelectedUser(user));
   };
 
   return (
@@ -78,23 +89,26 @@ const Users = () => {
                 <td>{user.email}</td>
                 <td>{user.phone}</td>
                 <td>
-                  <button onClick={() => setShowModal(true)}>
+                  <button onClick={() => handleShowModal(user)}>
                     <FontAwesomeIcon icon={faEdit} />
                   </button>
                 </td>
               </tr>
-              {!showModal ? null : (
-                <Modal
-                  show={showModal}
-                  title="Información del Usuario"
-                  onClose={() => setShowModal(false)}
-                >
-                  <ApprovalUserForm user={user} onCancel={() => setShowModal(false)} />
-                </Modal>
-              )}
             </>
           ))}
       </Table>
+      {!showModal ? null : (
+        <Modal
+          show={showModal}
+          title="Información del Usuario"
+          onClose={() => setShowModal(false)}
+        >
+          <ApprovalUserForm
+            user={selectedUser}
+            onCancel={() => setShowModal(false)}
+          />
+        </Modal>
+      )}
     </>
   );
 };

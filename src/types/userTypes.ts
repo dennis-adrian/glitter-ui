@@ -1,3 +1,5 @@
+import { Festival } from "./festivalTypes";
+
 export type FirebaseUser = {
   accessToken?: string;
   displayName?: string;
@@ -26,4 +28,5 @@ export interface User {
   isArtist: boolean;
   status: UserStatus;
   hasActiveReservation: boolean;
+  festivals: Festival[];
 }

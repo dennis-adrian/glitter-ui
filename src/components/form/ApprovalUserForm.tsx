@@ -1,6 +1,9 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { User } from '../../types/userTypes';
+import { update } from '../../api/helpers';
+import { useState } from 'react';
+import { setSelectedUser, updateSelectedUserProperty } from '../../store/features/dashboardSlice';
 
 type Props = {
   user: User;
@@ -8,8 +11,12 @@ type Props = {
 };
 
 const ApprovalUserForm = ({ user, onCancel }: Props) => {
+  const dispatch = useDispatch();
   const activeFestival = useSelector(
     (state: RootState) => state.activeFestival,
+  );
+  const [isUserInFestival, setIsUserInFestival] = useState(
+    !!user.festivals?.find((festival) => festival.id === activeFestival.id),
   );
 
   const userStatuses = [
@@ -27,8 +34,51 @@ const ApprovalUserForm = ({ user, onCancel }: Props) => {
     },
   ];
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const formattedUser = {
+      ...user,
+      isArtist: true,
+      festivals: user.festivals.map((festival) => {
+        return {
+          id: festival.id,
+        };
+      }),
+    }
+
+    const updatedUser = await update('users', user.id!.toString(), formattedUser);
+
+    if (updatedUser.id) {
+      dispatch(setSelectedUser(updatedUser));
+      onCancel();
+    } else {
+      alert('Error actualizando usuario');
+    }
+  };
+
+  const updateUser = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch(
+      updateSelectedUserProperty({ field: 'status', value: e.target.value }),
+    );
+  };
+
+  const updateUserFestival = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsUserInFestival(e.target.checked);
+    let updatedFestivals = [...user.festivals];
+    if (e.target.checked) {
+      updatedFestivals = [...updatedFestivals, activeFestival];
+    } else {
+      updatedFestivals = updatedFestivals.filter(
+        (festival) => festival.id !== activeFestival.id,
+      );
+    }
+    dispatch(
+      updateSelectedUserProperty({
+        field: 'festivals',
+        value: updatedFestivals,
+      }),
+    );
   };
 
   return (
@@ -52,10 +102,12 @@ const ApprovalUserForm = ({ user, onCancel }: Props) => {
         <label className="label">
           <span className="label-text">Actualiza su estado</span>
         </label>
-        <select className="select select-primary w-full" value={user.status}>
-          <option disabled selected>
-            Elige una opción
-          </option>
+        <select
+          className="select select-primary w-full"
+          value={user.status}
+          onChange={updateUser}
+        >
+          <option disabled>Elige una opción</option>
           {userStatuses.map((status) => (
             <option value={status.id}>{status.name}</option>
           ))}
@@ -63,14 +115,19 @@ const ApprovalUserForm = ({ user, onCancel }: Props) => {
       </div>
       <div className="flex flex-col">
         <div className="form-control">
-          <label className="cursor-pointer label">
+          <label className="label">
             <span className="text">
               <span>Agregar al artista a </span>
               <span className="font-bold text-indigo-500">
                 {activeFestival.name}
               </span>
             </span>
-            <input type="checkbox" className="toggle toggle-primary" />
+            <input
+              type="checkbox"
+              className="toggle toggle-primary"
+              checked={isUserInFestival}
+              onChange={updateUserFestival}
+            />
           </label>
         </div>
       </div>
