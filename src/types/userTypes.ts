@@ -25,4 +25,5 @@ export interface User {
   isAdmin: boolean;
   isArtist: boolean;
   status: UserStatus;
+  hasActiveReservation: boolean;
 }

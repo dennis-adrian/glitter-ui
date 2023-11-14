@@ -22,6 +22,7 @@ const initialState = {
   isAdmin: false,
   isArtist: false,
   isLoggedIn: false,
+  hasActiveReservation: false,
 } as CurrentUserState;
 
 export const currentUserSlice = createSlice({
@@ -44,6 +45,7 @@ export const currentUserSlice = createSlice({
         instagramProfile,
         isAdmin,
         isArtist,
+        hasActiveReservation,
       } = action.payload;
       state.id = id;
       state.firstName = firstName;
@@ -59,6 +61,7 @@ export const currentUserSlice = createSlice({
       state.instagramProfile = instagramProfile;
       state.isAdmin = isAdmin;
       state.isArtist = isArtist;
+      state.hasActiveReservation = hasActiveReservation;
     },
     setCurrentUserAccessToken: (state, action) => {
       state.accessToken = action.payload;

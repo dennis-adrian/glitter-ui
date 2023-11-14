@@ -5,13 +5,16 @@ import SearchContent from './SearchContent';
 import { User } from '../../types/userTypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import ErrorAlert from '../shared/ErrorAlert';
 
 type Props = {
+  errorMessage?: string;
   onCancel: () => void;
   onConfirm: (extraArtist: User) => void;
+  onTimeUp: () => void;
 };
 
-const ReservationForm = ({ onCancel, onConfirm }: Props) => {
+const ReservationForm = ({ errorMessage, onCancel, onConfirm, onTimeUp }: Props) => {
   const artists: User[] | undefined = useSelector(
     (state: RootState) => state.activeFestival.availableArtists,
   );
@@ -45,6 +48,7 @@ const ReservationForm = ({ onCancel, onConfirm }: Props) => {
 
   return (
     <div>
+      <ErrorAlert message={errorMessage} onTimeUp={onTimeUp} />
       <section className="mt-6 mb-4">
         <span>Rerservando para: </span>
         <span className="text-indigo-500 font-bold">{user.displayName}</span>

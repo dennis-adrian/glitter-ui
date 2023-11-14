@@ -1,7 +1,7 @@
 import { User } from "./userTypes";
 
 export type StandOrientation = 'HORIZONTAL' | 'VERTICAL';
-type StandStatus = 'AVAILABLE' | 'RESERVED' | 'SOLD';
+type StandStatus = 'AVAILABLE' | 'RESERVED' | 'CONFIRMED';
 
 export type StandModel = {
   id?: number;
@@ -33,6 +33,7 @@ export type Reservation = {
   requestedBy?: User;
   requestedById: number;
   standId?: number;
+  festivalId?: number;
 };
 
 export type ReservationStatus = 'PENDING' | 'APPROVED' | 'REJECTED' | 'CANCELLED';

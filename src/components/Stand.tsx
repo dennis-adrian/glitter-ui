@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
 import { CSSProperties } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store';
+import { updateStand } from '../store/features/festivalsSlice';
+import { updateUserProperty } from '../store/features/currentUserSlice';
+
 import { ElementSize, Reservation, StandModel } from '../types/eventMapTypes';
 import StandContent from './StandContent';
 import Modal from './shared/Modal';
 import ReservationForm from './form/ReservationForm';
 import { User } from '../types/userTypes';
-import { updateStand } from '../store/features/festivalsSlice';
-import { RootState } from '../store';
 import { update } from '../api/helpers';
 
 type Props = {
@@ -19,12 +22,14 @@ type Props = {
 const Stand = ({ stand, left, top }: Props) => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state: RootState) => state.currentUser);
+  const festival = useSelector((state: RootState) => state.activeFestival);
   const { label, standNumber, status, orientation } = stand;
   const [size, setSize] = useState<ElementSize>({
     wide: 0,
     narrow: 0,
   });
   const [showModal, setShowModal] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const updateStands = async () => {
@@ -62,6 +67,7 @@ const Stand = ({ stand, left, top }: Props) => {
       {
         artistId: currentUser.id!,
         requestedById: currentUser.id!,
+
       },
     ];
 
@@ -71,6 +77,7 @@ const Stand = ({ stand, left, top }: Props) => {
         {
           artistId: extraArtist.id!,
           requestedById: currentUser.id!,
+          festivalId: festival.id,
         },
       ];
     }
@@ -81,14 +88,26 @@ const Stand = ({ stand, left, top }: Props) => {
       reservations,
     });
 
+    if (!updatedStand.id) {
+      setError('No se pudo reservar el stand. Intente de nuevo.');
+      return;
+    }
+
+    dispatch(updateUserProperty({ field: 'hasActiveReservation', value: true }));
     dispatch(updateStand(updatedStand));
     setShowModal(false);
   };
 
+  const handleClick = () => {
+    if (currentUser.hasActiveReservation) return;
+    if (status === 'RESERVED' || status === 'CONFIRMED') return;
+    setShowModal(true);
+  }
+
   let bgColor = 'hover:bg-opacity-60 ';
   if (status === 'RESERVED') {
     bgColor += 'bg-emerald-200 hover:bg-emerald-400';
-  } else if (status === 'SOLD') {
+  } else if (status === 'CONFIRMED') {
     bgColor += 'bg-fuchsia-600 hover:bg-fuchsia-800';
   } else {
     bgColor += 'hover:bg-accent hover:bg-opacity-60';
@@ -100,7 +119,7 @@ const Stand = ({ stand, left, top }: Props) => {
         className={`${bgColor} bg-opacity-50`}
         key={standNumber}
         style={style}
-        onClick={() => setShowModal(true)}
+        onClick={handleClick}
       >
         <StandContent
           label={label || ''}
@@ -114,8 +133,10 @@ const Stand = ({ stand, left, top }: Props) => {
         onClose={() => setShowModal(false)}
       >
         <ReservationForm
+          errorMessage={error}
           onCancel={() => setShowModal(false)}
           onConfirm={onReservationConfirm}
+          onTimeUp={() => setError('')}
         />
       </Modal>
     </>
