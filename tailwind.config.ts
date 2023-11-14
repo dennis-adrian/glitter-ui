@@ -2,6 +2,10 @@
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
+    fontFamily: {
+      sans: ['Inter', 'sans-serif'],
+      title: ['Londrina Solid', 'sans-serif'],
+    },
     extend: {},
   },
   daisyui: {
