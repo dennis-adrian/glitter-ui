@@ -8,21 +8,33 @@ import {
 } from './store/features/currentUserSlice';
 
 import Navbar from './components/shared/navbar/Navbar';
+import { FirebaseUser, User } from './types/userTypes';
+import { baseUrl } from './utils';
 import { get } from './api/helpers';
 import { setActiveFestival } from './store/features/festivalsSlice';
-import { useGetCurrentUserQuery } from './store/features/api/apiSlice';
+
+const fetchUser = async (user: FirebaseUser) => {
+  const response = await fetch(`${baseUrl}/users/${user.firebaseId}`);
+  return response.json();
+};
 
 function App() {
   const dispatch = useDispatch();
-  const userId = localStorage.getItem('userId');
-  const { data: user, isSuccess } = useGetCurrentUserQuery(userId || '');
-
-  if (isSuccess) {
-    dispatch(setCurrentUser(user));
-    dispatch(setLoginStatus(true));
-  }
 
   useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    const userId = localStorage.getItem('userId');
+
+    if (!(accessToken && userId)) return;
+
+    const fetchCurrentUser = async () => {
+      const user: User = await fetchUser({
+        firebaseId: userId,
+      } as FirebaseUser);
+      dispatch(setCurrentUser(user));
+      dispatch(setLoginStatus(true));
+    };
+
     const fetchActiveFestival = async () => {
       const festivals = await get('festivals', { active: true });
       if (festivals?.length) {
@@ -31,6 +43,7 @@ function App() {
     };
 
     fetchActiveFestival();
+    fetchCurrentUser();
   }, [dispatch]);
 
   return (
