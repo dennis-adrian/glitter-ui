@@ -39,7 +39,7 @@ const StandContent = ({ stand }: Props) => {
             {standNumber}
           </h1>
           <h2
-            className={`text-center text-x font-bold text-sm ${statusColor}`}
+            className={`uppercase text-center text-x font-bold text-sm ${statusColor}`}
           >
             {statusTranslator(status)}
           </h2>

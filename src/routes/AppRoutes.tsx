@@ -9,6 +9,8 @@ import NextFestivalPage from '../pages/NextFestival';
 import { userLoader } from './loaders/userLoader';
 import DashboardPage from '../pages/Dashboard';
 import App from '../App';
+import Festivals from '../components/Festivals';
+import Users from '../components/Users';
 
 export const AppRoutes = createBrowserRouter([
   {
@@ -37,6 +39,16 @@ export const AppRoutes = createBrowserRouter([
         path: 'dashboard',
         element: <ProtectedRoute component={DashboardPage} forAdmin />,
         loader: userLoader,
+        children: [
+          {
+            path: 'users',
+            element: <Users />,
+          },
+          {
+            path: 'festivals',
+            element: <Festivals />
+          },
+        ],
       },
     ],
   },

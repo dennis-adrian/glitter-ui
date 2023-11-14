@@ -1,18 +1,22 @@
 export const statusTranslator = (status: string) => {
   switch (status) {
     case 'PENDING':
-      return 'PENDIENTE';
+      return 'pendiente';
     case 'APPROVED':
-      return 'APROBADO';
+      return 'aprobado';
     case 'AVAILABLE':
-      return 'DISPONIBLE';
+      return 'disponible';
     case 'RESERVED':
-      return 'RESERVADO';
+      return 'reservado';
     case 'CONFIRMED':
-      return 'CONFIRMADO';
+      return 'confirmado';
     case 'REJECTED':
-      return 'RECHAZADO';
+      return 'rechazado';
     case 'CANCELED':
-      return 'CANCELADO';
+      return 'cancelado';
+    case 'ACTIVE':
+      return 'activo';
+    case 'WAITING_APPROVAL':
+      return 'pendiente';
   }
 }
