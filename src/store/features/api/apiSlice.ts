@@ -7,7 +7,7 @@ export const apiSlice = createApi({
     getCurrentUser: builder.query({
       query: (id: string) => `/users/${id}`,
     }),
-    updateStand: builder.mutation({
+    updateStands: builder.mutation({
       query: (data) => ({
         url: `/stands/${data.id}`,
         method: 'PUT',
@@ -17,4 +17,4 @@ export const apiSlice = createApi({
   }),
 });
 
-export const { useGetCurrentUserQuery, useUpdateStandMutation } = apiSlice;
+export const { useGetCurrentUserQuery, useUpdateStandsMutation } = apiSlice;

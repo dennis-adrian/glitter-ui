@@ -6,12 +6,13 @@ import {
   setCurrentUser,
   setLoginStatus,
 } from './store/features/currentUserSlice';
+import { setActiveFestival } from './store/features/festivalsSlice';
 
 import Navbar from './components/shared/navbar/Navbar';
+import MobileDrawer from './components/shared/navbar/MobileDrawer';
 import { FirebaseUser, User } from './types/userTypes';
 import { baseUrl } from './utils';
 import { get } from './api/helpers';
-import { setActiveFestival } from './store/features/festivalsSlice';
 
 const fetchUser = async (user: FirebaseUser) => {
   const response = await fetch(`${baseUrl}/users/${user.firebaseId}`);
@@ -47,10 +48,14 @@ function App() {
   }, [dispatch]);
 
   return (
-    <>
-      <Navbar />
-      <Outlet />
-    </>
+    <div className="drawer">
+      <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
+      <div className="drawer-content flex flex-col">
+        <Navbar />
+        <Outlet />
+      </div>
+      <MobileDrawer />
+    </div>
   );
 }
 

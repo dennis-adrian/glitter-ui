@@ -1,5 +1,5 @@
 import { auth } from '../../../config/firebase';
-import { AuthError, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { AuthError, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 import { FirebaseUser } from '../../../types/userTypes';
 
 const provider = new GoogleAuthProvider();
@@ -29,6 +29,23 @@ export const signInWithGoogle = async (): Promise<RequestResult> => {
     return error as AuthError;
   }
 }
+
+export const signOutFromGoogle = async () => {
+  try {
+    await signOut(auth);
+
+    return {
+      code: 'auth/ok',
+      message: 'Sesión cerrada correctamente',
+    } as AuthError;
+  } catch (error) {
+    return {
+      code: 'auth/error',
+      message: 'Error al cerrar sesión',
+    } as AuthError;
+  }
+}
+
 
 export const isUser = (result: RequestResult) => {
   return (result as FirebaseUser).accessToken !== undefined;

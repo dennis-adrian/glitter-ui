@@ -36,4 +36,4 @@ export type Reservation = {
   festivalId?: number;
 };
 
-export type ReservationStatus = 'PENDING' | 'APPROVED' | 'REJECTED' | 'CANCELLED';
+export type ReservationStatus = 'PENDING' | 'APPROVED' | 'REJECTED' | 'CANCELED';

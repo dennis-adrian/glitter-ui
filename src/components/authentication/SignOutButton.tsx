@@ -5,17 +5,21 @@ import {
   setLoginStatus,
 } from '../../store/features/currentUserSlice';
 import { useNavigate } from 'react-router-dom';
+import { signOutFromGoogle } from './helpers';
 
 const SignOutButton = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleSingOut = () => {
-    dispatch(setLoginStatus(false));
-    dispatch(removeAccessToken());
-    dispatch(removeCurrentUser());
-    localStorage.removeItem('userId');
-    return navigate('/');
+  const handleSingOut = async () => {
+    const res = await signOutFromGoogle();
+    if (res.code === 'auth/ok') {
+      dispatch(setLoginStatus(false));
+      dispatch(removeAccessToken());
+      dispatch(removeCurrentUser());
+      localStorage.removeItem('userId');
+      return navigate('/');
+    }
   };
 
   return (
