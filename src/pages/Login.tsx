@@ -52,7 +52,7 @@ const LoginPage = () => {
           />
           <Modal
             show={showModal}
-            title="Información del Artista"
+            title="Completa tu Perfil"
             onClose={() => setShowModal(false)}
           >
             <UserForm fields={userFormFields} />

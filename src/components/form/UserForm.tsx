@@ -74,6 +74,13 @@ const UserForm = ({ fields }: Props) => {
 
   return (
     <form action="" className="w-full" onSubmit={handleSubmit}>
+      <div className="w-full flex justify-center">
+        <div className="avatar">
+          <div className="w-24 mask mask-squircle">
+            <img src={currentUser.photoURL} alt="foto del usuario" />
+          </div>
+        </div>
+      </div>
       {fields.map((field, index) => {
         const value = currentUser[field.name as keyof typeof currentUser] || '';
 
