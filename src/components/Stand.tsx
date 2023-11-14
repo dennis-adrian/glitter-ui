@@ -101,6 +101,8 @@ const Stand = ({ stand, left, top }: Props) => {
   const handleClick = () => {
     if (currentUser.hasActiveReservation) return;
     if (status === 'RESERVED' || status === 'CONFIRMED') return;
+    if (!festival.availableArtists?.find(artist => artist.id === currentUser.id)) return;
+
     setShowModal(true);
   }
 
