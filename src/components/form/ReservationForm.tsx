@@ -8,9 +8,10 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 type Props = {
   onCancel: () => void;
+  onConfirm: (extraArtist: User) => void;
 };
 
-const ReservationForm = ({ onCancel }: Props) => {
+const ReservationForm = ({ onCancel, onConfirm }: Props) => {
   const artists: User[] | undefined = useSelector(
     (state: RootState) => state.activeFestival.availableArtists,
   );
@@ -39,7 +40,7 @@ const ReservationForm = ({ onCancel }: Props) => {
   };
 
   const handleConfirm = () => {
-    console.log('confirm');
+    onConfirm(selectedArtist!);
   };
 
   return (

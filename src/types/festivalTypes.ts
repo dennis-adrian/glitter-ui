@@ -1,3 +1,4 @@
+import { StandModel } from "./eventMapTypes";
 import { User } from "./userTypes";
 
 export type FestivalStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED'
@@ -13,4 +14,5 @@ export type Festival = {
   logoURL?: string;
   status: FestivalStatus;
   availableArtists?: User[];
+  stands?: StandModel[];
 }

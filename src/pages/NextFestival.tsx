@@ -3,25 +3,21 @@ import festivalMap from '../assets/cba_gallery.png';
 import Stand from '../components/Stand';
 import { cbaGalleryPositionsV1 } from '../components/utils/standPositions';
 import { StandModel, StandPosition } from '../types/eventMapTypes';
-import { get } from '../api/helpers';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 
 const NextFestivalPage = () => {
+  const { stands } = useSelector((state: RootState) => state.activeFestival)
   const [mapLoaded, setMapLoaded] = useState(false);
   const [galleryStands, setGalleryStands] = useState<StandModel[]>([]);
 
   useEffect(() => {
-    const fetchStands = async () => {
-      const stands = await get('stands');
-      if (stands?.length) {
-        const filteredStands = stands.filter(
-          (stand: StandModel) => stand.label === 'G',
-        );
-        setGalleryStands(filteredStands);
-      }
-    };
+    const filteredStands = stands!.filter(
+      (stand: StandModel) => stand.label === 'G',
+    );
 
-    fetchStands();
-  }, []);
+    setGalleryStands(filteredStands);
+  }, [stands]);
 
   return (
     <>
@@ -49,7 +45,7 @@ const NextFestivalPage = () => {
               return (
                 <Stand
                   key={stand.standNumber}
-                  {...stand}
+                  stand={stand}
                   left={position?.left}
                   top={position?.top}
                 />

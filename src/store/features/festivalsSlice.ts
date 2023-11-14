@@ -1,5 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Festival } from "../../types/festivalTypes";
+import { StandModel } from "../../types/eventMapTypes";
 
 export type ActiveFestivalState = Festival;
 
@@ -13,6 +14,7 @@ const initialState = {
   logoURL: '',
   status: 'DRAFT',
   availableArtists: [],
+  stands: [],
 } as ActiveFestivalState;
 
 export const activeFestivalState = createSlice({
@@ -31,6 +33,7 @@ export const activeFestivalState = createSlice({
         logoURL,
         status,
         availableArtists,
+        stands
       } = action.payload;
       state.id = id;
       state.name = name;
@@ -42,11 +45,17 @@ export const activeFestivalState = createSlice({
       state.logoURL = logoURL;
       state.status = status;
       state.availableArtists = availableArtists;
+      state.stands = stands;
     },
     resetActiveFestival: () => initialState,
+    updateStand: (state, action: PayloadAction<StandModel>) => {
+      const { id } = action.payload;
+      const standIndex = state.stands!.findIndex(stand => stand.id === id);
+      state.stands![standIndex] = action.payload;
+    }
   },
 });
 
-export const { setActiveFestival, resetActiveFestival } = activeFestivalState.actions;
+export const { setActiveFestival, resetActiveFestival, updateStand } = activeFestivalState.actions;
 
 export default activeFestivalState.reducer;
