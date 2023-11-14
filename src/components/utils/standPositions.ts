@@ -52,3 +52,20 @@ export const cbaGalleryPositionsV1 = [
   { id: 49, left: 54, top: 51.2 },
   { id: 50, left: 54, top: 58.4 },
 ] as StandPosition[];
+
+export const cbaPatioPositionsV1 = [
+  { id: 1, left: 64, top: 85.4 },
+  { id: 2, left: 49, top: 85.4 },
+  { id: 3, left: 33.4, top: 85.4 },
+  { id: 4, left: 18.5, top: 85.4 },
+  { id: 5, left: 3.1, top: 85.4 },
+  { id: 6, left: 3.1, top: 59.6 },
+  { id: 7, left: 3.1, top: 45.3 },
+  { id: 8, left: 3.1, top: 31 },
+  { id: 9, left: 3.1, top: 16.5 },
+  { id: 10, left: 85.4, top: 1.86 },
+  { id: 11, left: 85.4, top: 16.4 },
+  { id: 12, left: 85.4, top: 30.8 },
+  { id: 13, left: 85.4, top: 45.1 },
+  { id: 14, left: 85.4, top: 59.8 },
+] as StandPosition[];

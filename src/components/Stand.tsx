@@ -12,14 +12,16 @@ import Modal from './shared/Modal';
 import ReservationForm from './form/ReservationForm';
 import { User } from '../types/userTypes';
 import { update } from '../api/helpers';
+import { getStandSize } from './helpers/stands.helpers';
 
 type Props = {
   left?: number;
-  top?: number;
   stand: StandModel;
+  top?: number;
+  type?: 'patio' | 'gallery';
 };
 
-const Stand = ({ stand, left, top }: Props) => {
+const Stand = ({ stand, left, top, type }: Props) => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state: RootState) => state.currentUser);
   const festival = useSelector((state: RootState) => state.activeFestival);
@@ -33,16 +35,21 @@ const Stand = ({ stand, left, top }: Props) => {
 
   useEffect(() => {
     const updateStands = async () => {
-      const mapImg = document.getElementById('galleryMap');
-      if (mapImg) {
-        const { width: imgWidth, height: imgHeight } =
-          mapImg.getBoundingClientRect();
-        const size = {
-          wide: imgWidth * 0.089 || 0,
-          narrow: imgHeight * 0.059 || 0,
-        };
-        setSize(size);
+      let size;
+
+      if (type === 'patio') {
+        size = getStandSize('patioMap', {
+          wideSide: 0.142,
+          narrowSide: 0.115,
+        });
+      } else {
+        size = getStandSize('galleryMap', {
+          wideSide: 0.089,
+          narrowSide: 0.059,
+        });
       }
+
+      if (size) setSize(size);
     };
 
     window.addEventListener('resize', updateStands);
@@ -51,7 +58,7 @@ const Stand = ({ stand, left, top }: Props) => {
     return () => {
       window.removeEventListener('resize', updateStands);
     };
-  }, []);
+  }, [type]);
 
   const style: CSSProperties = {
     position: 'absolute',

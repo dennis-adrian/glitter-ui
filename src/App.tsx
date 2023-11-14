@@ -26,9 +26,9 @@ function App() {
     const accessToken = localStorage.getItem('accessToken');
     const userId = localStorage.getItem('userId');
 
-    if (!(accessToken && userId)) return;
-
+    
     const fetchCurrentUser = async () => {
+      if (!(accessToken && userId)) return;
       const user: User = await fetchUser({
         firebaseId: userId,
       } as FirebaseUser);
