@@ -135,7 +135,11 @@ const Stand = ({ stand, left, top, type }: Props) => {
         style={style}
         onClick={handleClick}
       >
-        <StandContent stand={stand} />
+        <StandContent
+          orientation={orientation}
+          stand={stand}
+          standPosition={{ top: top || 0, left: left || 0 }}
+        />
       </div>
       <Modal
         show={showModal}

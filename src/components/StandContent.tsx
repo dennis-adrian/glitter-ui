@@ -4,11 +4,14 @@ import { StandModel } from '../types/eventMapTypes';
 import StandArtists from './StandArtists';
 
 type Props = {
+  orientation: 'HORIZONTAL' | 'VERTICAL';
   stand: StandModel;
+  standPosition: { left: number, top: number };
 };
 
-const StandContent = ({ stand }: Props) => {
+const StandContent = ({ orientation, stand, standPosition }: Props) => {
   const { label, standNumber, status } = stand;
+  const { left, top } = standPosition;
 
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const showTooltip = () => {
@@ -26,6 +29,19 @@ const StandContent = ({ stand }: Props) => {
     statusColor = 'text-fuchsia-700';
   }
 
+
+  let position;
+  if (orientation === 'HORIZONTAL' && top! < 50) {
+    position = 'top-10 left-1/2 transform -translate-x-1/2';
+  }
+  else if (orientation === 'HORIZONTAL' && top! > 50) {
+    position = '-top-56 left-1/2 transform -translate-x-1/2';
+  } else if (orientation === 'VERTICAL' && left! > 50) {
+    position = '-left-52 top-1/2 transform -translate-y-1/2';
+  } else {
+    position = 'top-1/2 left-10 transform -translate-y-1/2';
+  }
+
   return (
     <div
       className="w-full h-full z-20 absolute inline-block"
@@ -33,7 +49,9 @@ const StandContent = ({ stand }: Props) => {
       onMouseLeave={hideTooltip}
     >
       {tooltipVisible && (
-        <div className="card card-compact w-48 p-2 shadow-md bg-accent left-10 rounded-md">
+        <div
+          className={`card card-compact w-48 p-2 shadow-md bg-accent rounded-md" ${position}`}
+        >
           <h1 className="capitalize text-center text-xl font-bold text-indigo-500">
             Stand {label}
             {standNumber}
@@ -43,7 +61,7 @@ const StandContent = ({ stand }: Props) => {
           >
             {statusTranslator(status)}
           </h2>
-          <StandArtists stand={stand} /> 
+          <StandArtists stand={stand} />
         </div>
       )}
     </div>

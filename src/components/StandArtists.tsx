@@ -1,5 +1,5 @@
 import { StandModel } from '../types/eventMapTypes';
-import logo from '../assets/logo_with_background.png';
+import emptyStand from '../assets/empty_stand.png';
 import Avatar from './shared/Avatar';
 
 type Props = {
@@ -11,8 +11,8 @@ const StandArtists = ({ stand }: Props) => {
   let cardBody;
   let label;
   if (!artists?.length) {
-    cardBody = <Avatar photoURL={logo} alt="logo" />;
-    label = 'Glitter';
+    cardBody = <Avatar photoURL={emptyStand} alt="logo" />;
+    label = 'Stand Disponible';
   } else if (artists.length === 1) {
     cardBody = (
       <Avatar photoURL={artists[0]!.photoURL} alt={artists[0]!.displayName} />
