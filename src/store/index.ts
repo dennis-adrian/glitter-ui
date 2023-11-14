@@ -1,11 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
 import currentUserReducer from './features/currentUserSlice';
 import activeFestivalReducer from './features/festivalsSlice';
+import { apiSlice } from './features/api/apiSlice';
 
 export const store = configureStore({
   reducer: {
     currentUser: currentUserReducer,
     activeFestival: activeFestivalReducer,
+    [apiSlice.reducerPath]: apiSlice.reducer,
+  },
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware().concat(apiSlice.middleware);
   },
 });
 
