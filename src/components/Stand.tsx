@@ -67,7 +67,7 @@ const Stand = ({ stand, left, top }: Props) => {
       {
         artistId: currentUser.id!,
         requestedById: currentUser.id!,
-
+        festivalId: festival.id,
       },
     ];
 
@@ -93,7 +93,9 @@ const Stand = ({ stand, left, top }: Props) => {
       return;
     }
 
-    dispatch(updateUserProperty({ field: 'hasActiveReservation', value: true }));
+    dispatch(
+      updateUserProperty({ field: 'hasActiveReservation', value: true }),
+    );
     dispatch(updateStand(updatedStand));
     setShowModal(false);
   };
@@ -101,10 +103,13 @@ const Stand = ({ stand, left, top }: Props) => {
   const handleClick = () => {
     if (currentUser.hasActiveReservation) return;
     if (status === 'RESERVED' || status === 'CONFIRMED') return;
-    if (!festival.availableArtists?.find(artist => artist.id === currentUser.id)) return;
+    if (
+      !festival.availableArtists?.find((artist) => artist.id === currentUser.id)
+    )
+      return;
 
     setShowModal(true);
-  }
+  };
 
   let bgColor = 'hover:bg-opacity-60 ';
   if (status === 'RESERVED') {
@@ -123,11 +128,7 @@ const Stand = ({ stand, left, top }: Props) => {
         style={style}
         onClick={handleClick}
       >
-        <StandContent
-          label={label || ''}
-          standNumber={standNumber}
-          status={status}
-        />
+        <StandContent stand={stand} />
       </div>
       <Modal
         show={showModal}

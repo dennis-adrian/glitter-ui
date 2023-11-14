@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { statusTranslator } from './utils/statusTranslator';
+import { StandModel } from '../types/eventMapTypes';
+import StandArtists from './StandArtists';
 
 type Props = {
-  label: string;
-  standNumber: number;
-  status: string;
+  stand: StandModel;
 };
 
-const StandContent = ({ label, standNumber, status }: Props) => {
+const StandContent = ({ stand }: Props) => {
+  const { label, standNumber, status } = stand;
+
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const showTooltip = () => {
     setTooltipVisible(true);
@@ -17,11 +19,11 @@ const StandContent = ({ label, standNumber, status }: Props) => {
     setTooltipVisible(false);
   };
 
-  let statusColor = 'text-zinc-500'
+  let statusColor = 'text-zinc-500';
   if (status == 'RESERVED') {
-    statusColor = 'text-emerald-500'
+    statusColor = 'text-emerald-500';
   } else if (status === 'CONFIRMED') {
-    statusColor = 'text-fuchsia-700'
+    statusColor = 'text-fuchsia-700';
   }
 
   return (
@@ -31,29 +33,20 @@ const StandContent = ({ label, standNumber, status }: Props) => {
       onMouseLeave={hideTooltip}
     >
       {tooltipVisible && (
-        <div className="card card-compact w-64 p-2 shadow-md bg-accent left-10 rounded-md">
-          <h1 className="capitalize text-center font-bold text-indigo-500">
+        <div className="card card-compact w-48 p-2 shadow-md bg-accent left-10 rounded-md">
+          <h1 className="capitalize text-center text-xl font-bold text-indigo-500">
             Stand {label}
             {standNumber}
           </h1>
-          <h2 className={`text-center lowercase text-x font-bold text-sm ${statusColor}`}>{statusTranslator(status)}</h2>
+          <h2
+            className={`text-center text-x font-bold text-sm ${statusColor}`}
+          >
+            {statusTranslator(status)}
+          </h2>
+          <StandArtists stand={stand} /> 
         </div>
       )}
     </div>
-    // <div className="dropdown dropdown-hover">
-    //   <label tabIndex={0} className="btn m-1">
-    //     Click
-    //   </label>
-    //   <div
-    //     tabIndex={0}
-    //     className="dropdown-content z-[1] card card-compact w-64 p-2 shadow bg-primary text-primary-content"
-    //   >
-    //     <div className="card-body">
-    //       <h3 className="card-title">Card title!</h3>
-    //       <p>you can use any element as a dropdown.</p>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
 
