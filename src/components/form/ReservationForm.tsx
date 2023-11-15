@@ -35,8 +35,7 @@ const ReservationForm = ({
     const artistsWithoutCurrentUser = artists?.filter(
       (artist) => artist.id !== user.id,
     );
-    const options = artistsWithoutCurrentUser?.filter((artist, i) => {
-      if (i > 4) return false;
+    const options = artistsWithoutCurrentUser?.filter((artist) => {
       return artist.displayName.toLowerCase().includes(value.toLowerCase());
     });
 
@@ -78,9 +77,7 @@ const ReservationForm = ({
       ) : (
         <section className="form-control my-6 mx-2">
           <label className="label">
-            <span className="text-indigo-500 label-text">
-              ¿Compartes mesa?
-            </span>
+            <span className="text-indigo-500 label-text">¿Compartes mesa?</span>
           </label>
           <input
             type="search"
