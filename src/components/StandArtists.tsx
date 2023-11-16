@@ -6,7 +6,7 @@ type Props = {
   stand: StandModel;
 };
 const StandArtists = ({ stand }: Props) => {
-  const artists = stand.reservations?.map((reservation) => reservation.artist);
+  const artists = stand.reservations![0]?.artists;
 
   let cardBody;
   let label;

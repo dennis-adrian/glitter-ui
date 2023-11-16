@@ -28,12 +28,10 @@ export type StandPosition = {
 export type Reservation = {
   id?: number;
   status?: ReservationStatus;
-  artist?: User;
-  artistId: number;
-  requestedBy?: User;
-  requestedById: number;
   standId?: number;
   festivalId?: number;
+  artists: User[];
+  stand?: StandModel;
 };
 
 export type ReservationStatus = 'PENDING' | 'APPROVED' | 'REJECTED' | 'CANCELED';

@@ -36,6 +36,7 @@ export const activeFestivalState = createSlice({
         availableArtists,
         stands,
         artistsWithoutReservation,
+        reservations,
       } = action.payload;
       state.id = id;
       state.name = name;
@@ -49,6 +50,7 @@ export const activeFestivalState = createSlice({
       state.availableArtists = availableArtists;
       state.stands = stands;
       state.artistsWithoutReservation = artistsWithoutReservation;
+      state.reservations = reservations;
     },
     resetActiveFestival: () => initialState,
     updateStand: (state, action: PayloadAction<StandModel>) => {

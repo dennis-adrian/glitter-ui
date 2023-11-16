@@ -51,3 +51,13 @@ export const update = async (resource: string, id: string, data: object) => {
   const updatedData = await res.json();
   return updatedData;
 }
+
+export const post = async (resource: string, data: object) => {
+  const res = await fetch(`${baseUrl}/${resource}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  const createdData = await res.json();
+  return createdData;
+}

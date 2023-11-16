@@ -11,7 +11,7 @@ import StandContent from './StandContent';
 import Modal from './shared/Modal';
 import ReservationForm from './form/ReservationForm';
 import { User } from '../types/userTypes';
-import { update } from '../api/helpers';
+import { post } from '../api/helpers';
 import { getStandSize } from './helpers/stands.helpers';
 
 type Props = {
@@ -70,32 +70,25 @@ const Stand = ({ stand, left, top, type }: Props) => {
   };
 
   const onReservationConfirm = async (extraArtist: User) => {
-    let reservations: Reservation[] = [
-      {
-        artistId: currentUser.id!,
-        requestedById: currentUser.id!,
-        festivalId: festival.id,
-      },
-    ];
-
-    if (extraArtist) {
-      reservations = [
-        ...reservations,
+    const reservation = {
+      artists: [
         {
-          artistId: extraArtist.id!,
-          requestedById: currentUser.id!,
-          festivalId: festival.id,
+          id: currentUser.id,
         },
-      ];
-    }
+        {
+          id: extraArtist.id,
+        },
+      ],
+      festivalId: festival.id,
+      standId: stand.id,
+    };
 
-    const updatedStand = await update('stands', stand.id!.toString(), {
-      ...stand,
-      status: 'RESERVED',
-      reservations,
-    });
+    const createdReservation: Reservation = await post(
+      'reservations',
+      reservation,
+    );
 
-    if (!updatedStand.id) {
+    if (!createdReservation.id) {
       setError('No se pudo reservar el stand. Intente de nuevo.');
       return;
     }
@@ -103,7 +96,13 @@ const Stand = ({ stand, left, top, type }: Props) => {
     dispatch(
       updateUserProperty({ field: 'hasActiveReservation', value: true }),
     );
-    dispatch(updateStand(updatedStand));
+    dispatch(
+      updateStand({
+        ...stand,
+        status: createdReservation.stand?.status || 'AVAILABLE',
+        reservations: [createdReservation],
+      }),
+    );
     setShowModal(false);
   };
 
@@ -111,7 +110,9 @@ const Stand = ({ stand, left, top, type }: Props) => {
     if (currentUser.hasActiveReservation) return;
     if (status === 'RESERVED' || status === 'CONFIRMED') return;
     if (
-      !festival.artistsWithoutReservation?.find((artist) => artist.id === currentUser.id)
+      !festival.artistsWithoutReservation?.find(
+        (artist) => artist.id === currentUser.id,
+      )
     ) {
       return;
     }
