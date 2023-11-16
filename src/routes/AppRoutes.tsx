@@ -11,6 +11,7 @@ import DashboardPage from '../pages/Dashboard';
 import App from '../App';
 import Festivals from '../components/Festivals';
 import Users from '../components/Users';
+import Reservations from '../components/Reservations';
 
 export const AppRoutes = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ export const AppRoutes = createBrowserRouter([
             path: 'festivals',
             element: <Festivals />
           },
+          {
+            path: 'reservations',
+            element: <Reservations />
+          }
         ],
       },
     ],

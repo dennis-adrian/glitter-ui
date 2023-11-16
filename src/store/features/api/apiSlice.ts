@@ -14,7 +14,14 @@ export const apiSlice = createApi({
         body: data,
       }),
     }),
+    getReservations: builder.query({
+      query: () => '/reservations',
+    }),
   }),
 });
 
-export const { useGetCurrentUserQuery, useUpdateStandsMutation } = apiSlice;
+export const {
+  useGetCurrentUserQuery,
+  useUpdateStandsMutation,
+  useGetReservationsQuery,
+} = apiSlice;

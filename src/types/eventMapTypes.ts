@@ -34,4 +34,4 @@ export type Reservation = {
   stand?: StandModel;
 };
 
-export type ReservationStatus = 'PENDING' | 'APPROVED' | 'REJECTED' | 'CANCELED';
+export type ReservationStatus = 'PENDING' | 'APPROVED' | 'REJECTED' | 'CANCELLED';

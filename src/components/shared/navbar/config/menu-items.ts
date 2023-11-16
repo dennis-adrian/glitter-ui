@@ -12,5 +12,10 @@ export const menuItems = [
     label: 'Festivales',
     path: 'dashboard/festivals',
     isAdmin: true,
-  }
+  },
+  {
+    label: 'Reservas',
+    path: 'dashboard/reservations',
+    isAdmin: true,
+  }  
 ];
