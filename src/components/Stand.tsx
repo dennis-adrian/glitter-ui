@@ -75,13 +75,16 @@ const Stand = ({ stand, left, top, type }: Props) => {
         {
           id: currentUser.id,
         },
-        {
-          id: extraArtist.id,
-        },
       ],
       festivalId: festival.id,
       standId: stand.id,
     };
+
+    if (extraArtist?.id) {
+      reservation.artists.push({
+        id: extraArtist.id,
+      });
+    }
 
     const createdReservation: Reservation = await post(
       'reservations',
