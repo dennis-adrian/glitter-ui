@@ -12,7 +12,7 @@ export const statusTranslator = (status: string) => {
       return 'confirmado';
     case 'REJECTED':
       return 'rechazado';
-    case 'CANCELED':
+    case 'CANCELLED':
       return 'cancelado';
     case 'ACTIVE':
       return 'activo';

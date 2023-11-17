@@ -6,7 +6,10 @@ type Props = {
   stand: StandModel;
 };
 const StandArtists = ({ stand }: Props) => {
-  const artists = stand.reservations![0]?.artists;
+  const artists = stand.reservations?.find(
+    (reservation) =>
+      reservation.status === 'PENDING' || reservation.status === 'APPROVED',
+  )?.artists;
 
   let cardBody;
   let label;
