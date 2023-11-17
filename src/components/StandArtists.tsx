@@ -11,11 +11,16 @@ const StandArtists = ({ stand }: Props) => {
   let cardBody;
   let label;
   if (!artists?.length) {
-    cardBody = <Avatar photoURL={emptyStand} alt="logo" />;
+    cardBody = <Avatar photoURL={emptyStand} alt="logo" rounded withRing />;
     label = 'Stand Disponible';
   } else if (artists.length === 1) {
     cardBody = (
-      <Avatar photoURL={artists[0]!.photoURL} alt={artists[0]!.displayName} />
+      <Avatar
+        photoURL={artists[0]!.photoURL}
+        alt={artists[0]!.displayName}
+        rounded
+        withRing
+      />
     );
     label = artists[0]!.displayName;
   } else {
@@ -26,6 +31,8 @@ const StandArtists = ({ stand }: Props) => {
             key={artist!.id}
             photoURL={artist!.photoURL}
             alt={artist!.displayName}
+            rounded
+            withRing
           />
         ))}
       </div>
