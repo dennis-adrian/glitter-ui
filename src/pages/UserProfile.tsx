@@ -2,6 +2,7 @@ import { redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { Link } from 'react-router-dom';
+import Avatar from '../components/shared/Avatar';
 
 const UserProfile = () => {
   const currentUser = useSelector((state: RootState) => state.currentUser);
@@ -106,10 +107,14 @@ const UserProfile = () => {
             {currentUser.displayName}
           </h2>
         </section>
-        <div className="avatar">
-          <div className="w-36 rounded-full m-8">
-            <img src={currentUser?.photoURL} alt="glitter logo" />
-          </div>
+        <div className="m-8">
+          <Avatar
+            photoURL={currentUser?.photoURL}
+            alt={currentUser?.displayName}
+            masked
+            withName
+            width="w-36"
+          />
         </div>
         <div>{generateBodyContent()}</div>
       </div>

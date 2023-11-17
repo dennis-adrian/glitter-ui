@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Reservation, ReservationStatusEnum } from '../../types/eventMapTypes';
 import { statusTranslator } from '../utils/statusTranslator';
+import JoinedAvatars from '../shared/JoinedAvatars';
+import Avatar from '../shared/Avatar';
 
 type Props = {
   reservation: Reservation;
@@ -28,12 +30,23 @@ const reservationStatuses = [
 ];
 
 const ReservationEditForm = ({ reservation, onConfirm, onCancel }: Props) => {
-  const [updatedReservation, setUpdatedReservation] =
-    useState<Reservation>(reservation);
+  const [updatedReservation, setUpdatedReservation] = useState<Reservation>(
+    null!,
+  );
+
+  useEffect(() => {
+    setUpdatedReservation(reservation);
+  }, [reservation]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onConfirm(updatedReservation);
+    setUpdatedReservation(null!);
+    onCancel();
+  };
+
+  const handleCancel = () => {
+    setUpdatedReservation(null!);
     onCancel();
   };
 
@@ -41,11 +54,19 @@ const ReservationEditForm = ({ reservation, onConfirm, onCancel }: Props) => {
     <>
       <section className="mt-4 mb-4">
         <span>Rerservado para: </span>
-        <span className="text-indigo-500 font-bold">
-          {updatedReservation?.artists
-            ?.map((artist) => artist.displayName)
-            .join(' & ')}
-        </span>
+        <div className="w-full">
+          {updatedReservation?.artists?.length > 1 ? (
+            <JoinedAvatars artists={updatedReservation.artists} withNames />
+          ) : (
+            <Avatar
+              photoURL={updatedReservation?.artists[0]?.photoURL}
+              alt={updatedReservation?.artists[0]?.displayName}
+              rounded
+              withName
+              displayName={updatedReservation?.artists[0]?.displayName}
+            />
+          )}
+        </div>
       </section>
       <form onSubmit={handleSubmit}>
         <div className="form-control">
@@ -79,7 +100,7 @@ const ReservationEditForm = ({ reservation, onConfirm, onCancel }: Props) => {
           <button
             className="btn btn-secondary btn-outline mr-4"
             type="button"
-            onClick={onCancel}
+            onClick={handleCancel}
           >
             Cancelar
           </button>
