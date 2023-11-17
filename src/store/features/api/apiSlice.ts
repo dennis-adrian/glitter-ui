@@ -9,6 +9,18 @@ export const apiSlice = createApi({
       query: (id: string) => `/users/${id}`,
       providesTags: ['User'],
     }),
+    getUsers: builder.query({
+      query: () => '/users',
+      providesTags: ['User'],
+    }),
+    updateUser: builder.mutation({
+      query: (data) => ({
+        url: `/users/${data.id}`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: ['User'],
+    }),
     updateStands: builder.mutation({
       query: (data) => ({
         url: `/stands/${data.id}`,
@@ -19,6 +31,14 @@ export const apiSlice = createApi({
     getReservations: builder.query({
       query: () => '/reservations',
       providesTags: ['Reservation'],
+    }),
+    updateReservation: builder.mutation({
+      query: (data) => ({
+        url: `/reservations/${data.id}`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: ['Reservation'],
     }),
     deleteReservation: builder.mutation({
       query: (id: string | number) => ({
@@ -32,7 +52,10 @@ export const apiSlice = createApi({
 
 export const {
   useGetCurrentUserQuery,
+  useGetUsersQuery,
+  useUpdateUserMutation,
   useUpdateStandsMutation,
   useGetReservationsQuery,
+  useUpdateReservationMutation,
   useDeleteReservationMutation,
 } = apiSlice;

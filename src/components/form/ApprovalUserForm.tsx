@@ -1,17 +1,17 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { User } from '../../types/userTypes';
-import { update } from '../../api/helpers';
+import { User, UserStatus } from '../../types/userTypes';
 import { useState } from 'react';
-import { setSelectedUser, updateSelectedUserProperty } from '../../store/features/dashboardSlice';
+import { useUpdateUserMutation } from '../../store/features/api/apiSlice';
 
 type Props = {
   user: User;
   onCancel: () => void;
+  onChange: (user: User) => void;
 };
 
-const ApprovalUserForm = ({ user, onCancel }: Props) => {
-  const dispatch = useDispatch();
+const ApprovalUserForm = ({ user, onCancel, onChange }: Props) => {
+  const [updateUser, { isSuccess, isError }] = useUpdateUserMutation();
   const activeFestival = useSelector(
     (state: RootState) => state.activeFestival,
   );
@@ -34,6 +34,14 @@ const ApprovalUserForm = ({ user, onCancel }: Props) => {
     },
   ];
 
+  if (isSuccess) {
+    onCancel();
+  }
+
+  if (isError) {
+    alert('Hubo un error al actualizar el usuario');
+  }
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -45,22 +53,13 @@ const ApprovalUserForm = ({ user, onCancel }: Props) => {
           id: festival.id,
         };
       }),
-    }
+    };
 
-    const updatedUser = await update('users', user.id!.toString(), formattedUser);
-
-    if (updatedUser.id) {
-      dispatch(setSelectedUser(updatedUser));
-      onCancel();
-    } else {
-      alert('Error actualizando usuario');
-    }
+    await updateUser(formattedUser);
   };
 
-  const updateUser = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    dispatch(
-      updateSelectedUserProperty({ field: 'status', value: e.target.value }),
-    );
+  const handleUserChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    onChange({ ...user, status: e.target.value as UserStatus });
   };
 
   const updateUserFestival = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,12 +72,7 @@ const ApprovalUserForm = ({ user, onCancel }: Props) => {
         (festival) => festival.id !== activeFestival.id,
       );
     }
-    dispatch(
-      updateSelectedUserProperty({
-        field: 'festivals',
-        value: updatedFestivals,
-      }),
-    );
+    onChange({ ...user, festivals: updatedFestivals });
   };
 
   return (
@@ -105,7 +99,7 @@ const ApprovalUserForm = ({ user, onCancel }: Props) => {
         <select
           className="select select-primary w-full"
           value={user.status}
-          onChange={updateUser}
+          onChange={handleUserChange}
         >
           <option disabled>Elige una opción</option>
           {userStatuses.map((status) => (
