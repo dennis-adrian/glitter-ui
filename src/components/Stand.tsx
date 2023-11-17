@@ -110,6 +110,7 @@ const Stand = ({ stand, left, top, type }: Props) => {
   };
 
   const handleClick = () => {
+    if (!currentUser?.id) return;
     if (currentUser.hasActiveReservation) return;
     if (status === 'RESERVED' || status === 'CONFIRMED') return;
     const festivalReservations: Reservation[] = festival.reservations || [];

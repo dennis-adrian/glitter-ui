@@ -88,10 +88,7 @@ export const currentUserSlice = createSlice({
       state.accessToken = '';
       localStorage.removeItem('accessToken');
     },
-    removeCurrentUser: () => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      return initialState;
-    }
+    removeCurrentUser: () => initialState,
   },
 });
 
