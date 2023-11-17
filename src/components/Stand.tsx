@@ -112,11 +112,11 @@ const Stand = ({ stand, left, top, type }: Props) => {
   const handleClick = () => {
     if (currentUser.hasActiveReservation) return;
     if (status === 'RESERVED' || status === 'CONFIRMED') return;
-    if (
-      !festival.artistsWithoutReservation?.find(
-        (artist) => artist.id === currentUser.id,
-      )
-    ) {
+    const festivalReservations: Reservation[] = festival.reservations || [];
+    const artistsWithReservationsIds = festivalReservations?.flatMap(
+      (reservation) => reservation.artists?.map((artist) => artist.id),
+    );
+    if (artistsWithReservationsIds?.includes(currentUser?.id)) {
       return;
     }
 
