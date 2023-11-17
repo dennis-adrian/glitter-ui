@@ -47,6 +47,10 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Reservation'],
     }),
+    getReservationsByFestival: builder.query({
+      query: (id: string | number) => `/reservations?festival=${id}`,
+      providesTags: ['Reservation'],
+    }),
   }),
 });
 
@@ -58,4 +62,5 @@ export const {
   useGetReservationsQuery,
   useUpdateReservationMutation,
   useDeleteReservationMutation,
+  useGetReservationsByFestivalQuery,
 } = apiSlice;

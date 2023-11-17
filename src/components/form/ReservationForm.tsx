@@ -6,6 +6,9 @@ import { User } from '../../types/userTypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import ErrorAlert from '../shared/ErrorAlert';
+import { useGetReservationsByFestivalQuery } from '../../store/features/api/apiSlice';
+import { Reservation } from '../../types/eventMapTypes';
+import { Festival } from '../../types/festivalTypes';
 
 type Props = {
   errorMessage?: string;
@@ -20,8 +23,11 @@ const ReservationForm = ({
   onConfirm,
   onTimeUp,
 }: Props) => {
-  const artists: User[] | undefined = useSelector(
-    (state: RootState) => state.activeFestival.artistsWithoutReservation,
+  const festival: Festival | undefined = useSelector(
+    (state: RootState) => state.activeFestival,
+  );
+  const { data: reservations } = useGetReservationsByFestivalQuery(
+    festival?.id || '',
   );
 
   const [searchText, setSearchText] = useState('');
@@ -32,10 +38,17 @@ const ReservationForm = ({
   const handleSearch = (e: FormEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
     setSearchText(value);
-    const artistsWithoutCurrentUser = artists?.filter(
-      (artist) => artist.id !== user.id,
+    const artistsWithReservationsIds = reservations?.flatMap(
+      (reservation: Reservation) =>
+        reservation.artists.map((artist) => artist.id),
     );
-    const options = artistsWithoutCurrentUser?.filter((artist) => {
+    const artists = festival?.artists?.filter(
+      (artist) =>
+        !artistsWithReservationsIds?.includes(artist.id) &&
+        artist.id !== user.id,
+    );
+
+    const options = artists?.filter((artist) => {
       return artist.displayName.toLowerCase().includes(value.toLowerCase());
     });
 
@@ -44,7 +57,7 @@ const ReservationForm = ({
 
   const handleSelectArtist = (e: SyntheticEvent<HTMLLIElement>) => {
     const artistId = e.currentTarget.value;
-    const artist = artists?.find((artist) => artist.id === artistId);
+    const artist = festival.artists?.find((artist) => artist.id === artistId);
     setSearchText('');
     setSelectedArtist(artist);
   };

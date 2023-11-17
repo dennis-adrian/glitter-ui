@@ -13,8 +13,7 @@ export type Festival = {
   locationURL?: string;
   logoURL?: string;
   status: FestivalStatus;
-  availableArtists?: User[];
+  artists?: User[];
   stands?: StandModel[];
-  artistsWithoutReservation?: User[];
   reservations?: Reservation[];
 }

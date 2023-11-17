@@ -13,7 +13,7 @@ const initialState = {
   locationURL: '',
   logoURL: '',
   status: 'DRAFT',
-  availableArtists: [],
+  artists: [],
   stands: [],
 } as ActiveFestivalState;
 
@@ -32,7 +32,7 @@ export const activeFestivalState = createSlice({
         locationURL,
         logoURL,
         status,
-        availableArtists,
+        artists,
         stands,
         reservations,
       } = action.payload;
@@ -45,7 +45,7 @@ export const activeFestivalState = createSlice({
       state.locationURL = locationURL;
       state.logoURL = logoURL;
       state.status = status;
-      state.availableArtists = availableArtists;
+      state.artists = artists;
       state.stands = stands;
       state.reservations = reservations;
     },
