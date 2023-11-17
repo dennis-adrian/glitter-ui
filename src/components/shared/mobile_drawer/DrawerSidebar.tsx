@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
-import MenuItem from './MenuItem';
-import { menuItems } from './config/menu-items';
+
+import { menuItems } from '../navbar/config/menu-items';
+
+import MenuItem from '../navbar/MenuItem';
 import logo from '../../../assets/logo.png';
 
-const MobileDrawer = () => {
+const DrawerSidebar = () => {
   return (
     <div className="drawer-side z-20">
       <label
@@ -30,4 +32,4 @@ const MobileDrawer = () => {
   );
 };
 
-export default MobileDrawer;
+export default DrawerSidebar;

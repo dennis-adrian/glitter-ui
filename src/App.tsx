@@ -1,17 +1,18 @@
 import { Outlet } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+
 import {
   setCurrentUser,
   setLoginStatus,
-} from './store/features/currentUserSlice';
-import { setActiveFestival } from './store/features/festivalsSlice';
-
-import Navbar from './components/shared/navbar/Navbar';
-import MobileDrawer from './components/shared/navbar/MobileDrawer';
+} from 'src/store/features/currentUserSlice';
+import { setActiveFestival } from 'src/store/features/festivalsSlice';
 import {
   useGetActiveFestivalQuery,
   useGetCurrentUserQuery,
-} from './store/features/api/apiSlice';
+} from 'src/store/features/api/apiSlice';
+
+import Navbar from 'components/shared/navbar/Navbar';
+import DrawerRoot from 'components/shared/mobile_drawer/DrawerRoot';
 
 function App() {
   const dispatch = useDispatch();
@@ -32,14 +33,10 @@ function App() {
   }
 
   return (
-    <div className="drawer">
-      <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content flex flex-col">
-        <Navbar />
-        <Outlet />
-      </div>
-      <MobileDrawer />
-    </div>
+    <DrawerRoot>
+      <Navbar />
+      <Outlet />
+    </DrawerRoot>
   );
 }
 
