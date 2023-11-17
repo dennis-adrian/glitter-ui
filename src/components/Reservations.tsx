@@ -1,25 +1,13 @@
-import { useGetReservationsQuery } from '../store/features/api/apiSlice';
+import { useDeleteReservationMutation, useGetReservationsQuery } from '../store/features/api/apiSlice';
 import { Reservation } from '../types/eventMapTypes';
-import LoadingSpinner from './shared/LoadingSpinner';
 import Table from './shared/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { statusTranslator } from './utils/statusTranslator';
 
 const Reservations = () => {
-  const {
-    data: reservations,
-    isLoading,
-    isSuccess,
-  } = useGetReservationsQuery('');
-
-  if (isLoading) {
-    return (
-      <div className="flex justify-center">
-        <LoadingSpinner />
-      </div>
-    );
-  }
+  const { data: reservations, isSuccess } = useGetReservationsQuery('');
+  const [deleteReservation] = useDeleteReservationMutation();
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -32,6 +20,10 @@ const Reservations = () => {
       default:
         return 'bg-gray-200';
     }
+  };
+
+  const handleDelete = async (reservation: Reservation) => {
+    await deleteReservation(reservation.id!);
   };
 
   return (
@@ -56,7 +48,10 @@ const Reservations = () => {
               <button className="text-emerald-400" onClick={() => {}}>
                 <FontAwesomeIcon icon={faFileEdit} />
               </button>
-              <button className="text-rose-400">
+              <button
+                className="text-rose-400"
+                onClick={() => handleDelete(reservation)}
+              >
                 <FontAwesomeIcon icon={faTrash} />
               </button>
             </td>

@@ -51,7 +51,7 @@ export const AppRoutes = createBrowserRouter([
           },
           {
             path: 'reservations',
-            element: <Reservations />
+            element: <Reservations />,
           }
         ],
       },

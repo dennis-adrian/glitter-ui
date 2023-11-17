@@ -61,3 +61,11 @@ export const post = async (resource: string, data: object) => {
   const createdData = await res.json();
   return createdData;
 }
+
+export const deleteResource = async (resource: string, id: string | number) => {
+  const res = await fetch(`${baseUrl}/${resource}/${id}`, {
+    method: 'DELETE',
+  });
+  const deletedData = await res.json();
+  return deletedData;
+}

@@ -3,9 +3,11 @@ import { baseUrl } from '../../../utils';
 
 export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({ baseUrl }),
+  tagTypes: ['User', 'Reservation'],
   endpoints: (builder) => ({
     getCurrentUser: builder.query({
       query: (id: string) => `/users/${id}`,
+      providesTags: ['User'],
     }),
     updateStands: builder.mutation({
       query: (data) => ({
@@ -16,6 +18,14 @@ export const apiSlice = createApi({
     }),
     getReservations: builder.query({
       query: () => '/reservations',
+      providesTags: ['Reservation'],
+    }),
+    deleteReservation: builder.mutation({
+      query: (id: string | number) => ({
+        url: `/reservations/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Reservation'],
     }),
   }),
 });
@@ -24,4 +34,5 @@ export const {
   useGetCurrentUserQuery,
   useUpdateStandsMutation,
   useGetReservationsQuery,
+  useDeleteReservationMutation,
 } = apiSlice;
