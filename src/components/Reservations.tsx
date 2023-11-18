@@ -1,23 +1,28 @@
+import { useState } from 'react';
+
 import {
   useDeleteReservationMutation,
   useGetReservationsQuery,
   useUpdateReservationMutation,
 } from '../store/features/api/apiSlice';
-import { Reservation, ReservationStatusEnum } from '../types/eventMapTypes';
-import Table from './shared/Table';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { faFileEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+
+import { Reservation, ReservationStatusEnum } from '../types/eventMapTypes';
 import { statusTranslator } from './utils/statusTranslator';
-import Modal from './shared/Modal';
-import ReservationEditForm from './form/ReservationEditForm';
-import { useState } from 'react';
+
+import DeleteConfirmationModal from './shared/DeleteConfirmationModal';
+import IconButton from './shared/buttons/IconButton';
+import Table from './shared/Table';
+import ReservationEditModal from './ReservationEditModal';
 
 const Reservations = () => {
   const { data: reservations, isSuccess } = useGetReservationsQuery('');
   const [updateReservation] = useUpdateReservationMutation();
   const [deleteReservation] = useDeleteReservationMutation();
-  const [selected, setSelected] = useState<Reservation>();
+  const [selected, setSelected] = useState<Reservation>(null!);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -32,13 +37,20 @@ const Reservations = () => {
     }
   };
 
-  const handleDelete = async (reservation: Reservation) => {
-    await deleteReservation(reservation.id!);
+  const handleDelete = (reservation: Reservation) => {
+    setSelected(reservation);
+    setShowDeleteModal(true);
   };
 
-  const handleEdit = async (reservation: Reservation) => {
+  const handleEdit = (reservation: Reservation) => {
     setSelected(reservation);
     setShowEditModal(true);
+  };
+
+  const resetModal = () => {
+    setSelected(null!);
+    setShowDeleteModal(false);
+    setShowEditModal(false);
   };
 
   return (
@@ -62,35 +74,34 @@ const Reservations = () => {
                   ?.map((artist) => artist.displayName)
                   .join(', ')}
               </td>
-              <td className="flex gap-2">
-                <button
-                  className="text-emerald-400"
+              <td className="flex gap-1">
+                <IconButton
+                  icon={faFileEdit}
+                  styles={'text-emerald-400'}
                   onClick={() => handleEdit(reservation)}
-                >
-                  <FontAwesomeIcon icon={faFileEdit} />
-                </button>
-                <button
-                  className="text-rose-400"
+                />
+                <IconButton
+                  icon={faTrash}
+                  styles="text-rose-400"
                   onClick={() => handleDelete(reservation)}
-                >
-                  <FontAwesomeIcon icon={faTrash} />
-                </button>
+                />
               </td>
             </tr>
           ))}
         </Table>
       )}
-      <Modal
+      <ReservationEditModal
         show={showEditModal}
-        title="Modificar Reserva"
-        onClose={() => setShowEditModal(false)}
-      >
-        <ReservationEditForm
-          reservation={selected!}
-          onConfirm={updateReservation}
-          onCancel={() => setShowEditModal(false)}
-        />
-      </Modal>
+        reservation={selected}
+        onConfirm={updateReservation}
+        onHide={resetModal}
+      />
+
+      <DeleteConfirmationModal
+        show={showDeleteModal}
+        onConfirm={() => deleteReservation(selected.id!)}
+        onHide={resetModal}
+      />
     </>
   );
 };
