@@ -26,8 +26,8 @@ const DeleteConfirmationModal = ({ show, onConfirm, onHide }: Props) => {
         </div>
       </ModalBody>
       <ModalFooter>
-        <PrimaryButton label="Aceptar" onClick={handleConfirmation} />
         <CancelButton onClick={onHide} />
+        <PrimaryButton label="Aceptar" onClick={handleConfirmation} />
       </ModalFooter>
     </Modal>
   );

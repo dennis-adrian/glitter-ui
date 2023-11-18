@@ -6,7 +6,7 @@ type Props = {
 
 const CancelButton = ({ onClick }: Props) => {
   return (
-    <Button label="Cancelar" type="btn-error btn-outline" onClick={onClick} />
+    <Button label="Cancelar" styles="btn-error btn-outline" onClick={onClick} />
   );
 };
 
