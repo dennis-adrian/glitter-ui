@@ -3,7 +3,7 @@ import { baseUrl } from '../../../utils';
 
 export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({ baseUrl }),
-  tagTypes: ['User', 'Reservation', 'CurrentUser'],
+  tagTypes: ['User', 'Reservation', 'CurrentUser', 'ActiveFestival'],
   endpoints: (builder) => ({
     getCurrentUser: builder.query({
       query: (id: string) => `/users/${id}`,
@@ -45,7 +45,7 @@ export const apiSlice = createApi({
         url: `/reservations/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Reservation'],
+      invalidatesTags: ['Reservation', 'ActiveFestival'],
     }),
     getReservationsByFestival: builder.query({
       query: (id: string | number) => `/reservations?festival=${id}`,
@@ -53,6 +53,7 @@ export const apiSlice = createApi({
     }),
     getActiveFestival: builder.query({
       query: () => '/festivals?active=true',
+      providesTags: ['ActiveFestival'],
     }),
   }),
 });
