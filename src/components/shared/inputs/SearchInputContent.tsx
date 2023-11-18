@@ -1,15 +1,14 @@
-import { SyntheticEvent } from "react";
-import { User } from "../../types/userTypes";
+import { SyntheticEvent } from 'react';
 
-export type SearchOption = User;
+export type SearchOptions = Array<{ id: string | number; displayName: string }> | undefined;
 
 type Props = {
   show: boolean;
-  options?: SearchOption[] | undefined;
+  options?: SearchOptions;
   onSelect: (e: SyntheticEvent<HTMLLIElement>) => void;
 };
 
-const SearchContent = ({ show, options, onSelect }: Props) => {
+const SearchInputContent = ({ show, options, onSelect }: Props) => {
   let items;
   if (!options?.length) {
     items = (
@@ -37,4 +36,4 @@ const SearchContent = ({ show, options, onSelect }: Props) => {
   );
 };
 
-export default SearchContent;
+export default SearchInputContent;

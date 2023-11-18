@@ -1,14 +1,19 @@
-import { FormEvent, SyntheticEvent, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
-import SearchContent from './SearchContent';
-import { User } from '../../types/userTypes';
+import { useState } from 'react';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import ErrorAlert from '../shared/ErrorAlert';
-import { useGetReservationsByFestivalQuery } from '../../store/features/api/apiSlice';
-import { Reservation } from '../../types/eventMapTypes';
-import { Festival } from '../../types/festivalTypes';
+
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/store';
+import { useGetReservationsByFestivalQuery } from 'src/store/features/api/apiSlice';
+
+import { Festival } from 'src/types/festivalTypes';
+import { Reservation } from 'src/types/eventMapTypes';
+import { User } from 'src/types/userTypes';
+
+import { SearchOptions } from 'src/components/shared/inputs/SearchInputContent';
+import ErrorAlert from 'src/components/shared/ErrorAlert';
+import SearchInput from 'src/components/shared/inputs/SearchInput';
 
 type Props = {
   errorMessage?: string;
@@ -27,38 +32,31 @@ const ReservationForm = ({
     (state: RootState) => state.activeFestival,
   );
   const { data: reservations } = useGetReservationsByFestivalQuery(
-    festival?.id || '',
+    festival.id!,
   );
 
-  const [searchText, setSearchText] = useState('');
-  const [searchOptions, setSearchOptions] = useState<User[]>();
   const [selectedArtist, setSelectedArtist] = useState<User | undefined>();
   const user = useSelector((state: RootState) => state.currentUser);
 
-  const handleSearch = (e: FormEvent<HTMLInputElement>) => {
-    const value = e.currentTarget.value;
-    setSearchText(value);
-    const artistsWithReservationsIds = reservations?.flatMap(
-      (reservation: Reservation) =>
-        reservation.artists.map((artist) => artist.id),
-    );
-    const artists = festival?.artists?.filter(
-      (artist) =>
-        !artistsWithReservationsIds?.includes(artist.id) &&
-        artist.id !== user.id,
-    );
+  const artistsWithReservationsIds = reservations?.flatMap(
+    (reservation: Reservation) =>
+      reservation.artists.map((artist) => artist.id),
+  );
 
-    const options = artists?.filter((artist) => {
-      return artist.displayName.toLowerCase().includes(value.toLowerCase());
-    });
+  let searchOptions = festival?.artists?.map((artist) => {
+    if (artist.id === user.id) return;
+    if (artistsWithReservationsIds?.includes(artist.id)) return;
 
-    setSearchOptions(options);
-  };
+    return {
+      id: artist.id!,
+      displayName: artist.displayName!,
+    };
+  });
 
-  const handleSelectArtist = (e: SyntheticEvent<HTMLLIElement>) => {
-    const artistId = e.currentTarget.value;
+  searchOptions = searchOptions?.filter((o) => o !== undefined);
+
+  const handleSelectArtist = (artistId: number) => {
     const artist = festival.artists?.find((artist) => artist.id === artistId);
-    setSearchText('');
     setSelectedArtist(artist);
   };
 
@@ -89,19 +87,11 @@ const ReservationForm = ({
         </div>
       ) : (
         <section className="form-control my-6 mx-2">
-          <label className="label">
-            <span className="text-indigo-500 label-text">¿Compartes mesa?</span>
-          </label>
-          <input
-            type="search"
-            className="input input-bordered input-primary w-full"
+          <SearchInput
+            label="¿Compartes mesa?"
+            labelStyles="text-indigo-500"
+            options={searchOptions as SearchOptions}
             placeholder="Escribe con quien compartirás"
-            value={searchText}
-            onChange={handleSearch}
-          />
-          <SearchContent
-            show={!!searchText}
-            options={searchOptions}
             onSelect={handleSelectArtist}
           />
         </section>
