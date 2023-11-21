@@ -15,8 +15,8 @@ export const formatTime = (date: string) => {
     minute: 'numeric',
   };
   return dateObj.toLocaleTimeString('es-ES', options);
-}
+};
 
 export const formatDateWithTime = (date: string) => {
-  return `${formatDate(date)} a las ${formatTime(date)}`
-}
+  return `${formatDate(date)} a las ${formatTime(date)}`;
+};

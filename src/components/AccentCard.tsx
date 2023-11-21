@@ -1,14 +1,16 @@
-import './AccentCard.scss'
+import './AccentCard.scss';
 
 type Props = {
-  children: React.ReactNode,
-  styles?: React.CSSProperties,
-}
+  children: React.ReactNode;
+  styles?: React.CSSProperties;
+};
 
 const AccentCard = ({ children, styles }: Props) => {
   return (
-    <div className='accent-card' style={styles} >{children}</div>
-  )
-}
+    <div className="accent-card" style={styles}>
+      {children}
+    </div>
+  );
+};
 
-export default AccentCard
+export default AccentCard;

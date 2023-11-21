@@ -45,7 +45,7 @@ const CbaGalleryMap = ({ stands }: Props) => {
                 stand={stand}
                 left={position?.left}
                 top={position?.top}
-                type='gallery'
+                type="gallery"
               />
             );
           })}

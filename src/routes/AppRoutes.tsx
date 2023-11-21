@@ -47,12 +47,12 @@ export const AppRoutes = createBrowserRouter([
           },
           {
             path: 'festivals',
-            element: <Festivals />
+            element: <Festivals />,
           },
           {
             path: 'reservations',
             element: <Reservations />,
-          }
+          },
         ],
       },
     ],

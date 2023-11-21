@@ -1,7 +1,7 @@
-import { Reservation, StandModel } from "./eventMapTypes";
-import { User } from "./userTypes";
+import { Reservation, StandModel } from './eventMapTypes';
+import { User } from './userTypes';
 
-export type FestivalStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED'
+export type FestivalStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
 
 export type Festival = {
   id?: number;
@@ -16,4 +16,4 @@ export type Festival = {
   artists?: User[];
   stands?: StandModel[];
   reservations?: Reservation[];
-}
+};

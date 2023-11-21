@@ -24,14 +24,16 @@ const Festivals = () => {
       <div className="flex justify-end">
         <button className="btn btn-primary m-4">Crear Festival</button>
       </div>
-      <Table headers={[
-        '',
-        'Nombre',
-        'Fecha de Inicio',
-        'Fecha Final',
-        'Lugar',
-        'Acciones',
-      ]}>
+      <Table
+        headers={[
+          '',
+          'Nombre',
+          'Fecha de Inicio',
+          'Fecha Final',
+          'Lugar',
+          'Acciones',
+        ]}
+      >
         {festivals.length > 0 &&
           festivals.map((festival, i) => (
             <tr key={festival.id}>

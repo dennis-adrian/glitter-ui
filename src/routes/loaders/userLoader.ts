@@ -1,4 +1,4 @@
-import { getUser } from "../../api/helpers";
+import { getUser } from '../../api/helpers';
 
 export const userLoader = async () => {
   if (localStorage.getItem('userId') && localStorage.getItem('accessToken')) {
@@ -6,4 +6,4 @@ export const userLoader = async () => {
   }
 
   return null;
-}
+};

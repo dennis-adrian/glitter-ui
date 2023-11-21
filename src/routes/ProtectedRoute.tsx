@@ -6,7 +6,10 @@ type Props = {
   forAdmin?: boolean;
 };
 
-export const ProtectedRoute = ({ component: Component, forAdmin = false }: Props) => {
+export const ProtectedRoute = ({
+  component: Component,
+  forAdmin = false,
+}: Props) => {
   const loaderData = useLoaderData();
   if (!loaderData) {
     return <Navigate to="/login" />;

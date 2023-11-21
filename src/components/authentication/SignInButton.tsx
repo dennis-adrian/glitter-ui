@@ -28,10 +28,10 @@ const SignInButton = ({ onError, onLoading }: Props) => {
   const handleSignIn = async () => {
     const result = await signInWithGoogle();
     const errorMessage =
-    'Error al iniciar sesión. Intente de nuevo o intente crear una cuenta';
+      'Error al iniciar sesión. Intente de nuevo o intente crear una cuenta';
 
     if (isUser(result)) {
-      onLoading(true)
+      onLoading(true);
       const accessToken = (result as FirebaseUser).accessToken;
       const user: User = await fetchUser(result as FirebaseUser);
       if (!user.id) {

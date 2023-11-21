@@ -5,7 +5,7 @@ export const menuItems = [
   },
   {
     label: 'Usuarios',
-    path : 'dashboard/users',
+    path: 'dashboard/users',
     isAdmin: true,
   },
   {
@@ -17,5 +17,5 @@ export const menuItems = [
     label: 'Reservas',
     path: 'dashboard/reservations',
     isAdmin: true,
-  }  
+  },
 ];

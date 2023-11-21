@@ -1,5 +1,5 @@
-import { CurrentUserState } from "../store/features/currentUserSlice";
-import { baseUrl } from "../utils";
+import { CurrentUserState } from '../store/features/currentUserSlice';
+import { baseUrl } from '../utils';
 
 const cleanUserForPostRequest = (user: CurrentUserState) => {
   const cleanedUser = { ...user };
@@ -12,7 +12,7 @@ const cleanUserForPostRequest = (user: CurrentUserState) => {
   }
 
   return cleanedUser;
-}
+};
 
 export const postUser = async (data: CurrentUserState) => {
   const url = `${baseUrl}/users`;
@@ -33,14 +33,16 @@ export const getUser = async (id: string) => {
   const res = await fetch(url);
   const user = await res.json();
   return user;
-}
+};
 
 export const get = async (resource: string, params: object = {}) => {
-  const formattedParams = Object.entries(params).map(([key, value]) => `${key}=${value}`).join('&');
+  const formattedParams = Object.entries(params)
+    .map(([key, value]) => `${key}=${value}`)
+    .join('&');
   const res = await fetch(`${baseUrl}/${resource}?${formattedParams}`);
   const data = await res.json();
   return data;
-}
+};
 
 export const update = async (resource: string, id: string, data: object) => {
   const res = await fetch(`${baseUrl}/${resource}/${id}`, {
@@ -50,7 +52,7 @@ export const update = async (resource: string, id: string, data: object) => {
   });
   const updatedData = await res.json();
   return updatedData;
-}
+};
 
 export const post = async (resource: string, data: object) => {
   const res = await fetch(`${baseUrl}/${resource}`, {
@@ -60,7 +62,7 @@ export const post = async (resource: string, data: object) => {
   });
   const createdData = await res.json();
   return createdData;
-}
+};
 
 export const deleteResource = async (resource: string, id: string | number) => {
   const res = await fetch(`${baseUrl}/${resource}/${id}`, {
@@ -68,4 +70,4 @@ export const deleteResource = async (resource: string, id: string | number) => {
   });
   const deletedData = await res.json();
   return deletedData;
-}
+};

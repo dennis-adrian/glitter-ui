@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent } from 'react';
 
 type Props = {
   label: string;
@@ -9,11 +9,17 @@ type Props = {
   onValueChange: ({ field, value }: { field: string; value: string }) => void;
 };
 
-const InputField = ({ label, name, required, onValueChange, ...props }: Props) => {
+const InputField = ({
+  label,
+  name,
+  required,
+  onValueChange,
+  ...props
+}: Props) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     onValueChange({ field: name, value });
-  }
+  };
 
   return (
     <div className="form-control w-full mt-2">

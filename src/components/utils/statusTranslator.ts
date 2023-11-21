@@ -19,4 +19,4 @@ export const statusTranslator = (status: string) => {
     case 'WAITING_APPROVAL':
       return 'pendiente';
   }
-}
+};

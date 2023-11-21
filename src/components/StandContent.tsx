@@ -6,7 +6,7 @@ import StandArtists from './StandArtists';
 type Props = {
   orientation: 'HORIZONTAL' | 'VERTICAL';
   stand: StandModel;
-  standPosition: { left: number, top: number };
+  standPosition: { left: number; top: number };
 };
 
 const StandContent = ({ orientation, stand, standPosition }: Props) => {
@@ -29,12 +29,10 @@ const StandContent = ({ orientation, stand, standPosition }: Props) => {
     statusColor = 'text-fuchsia-700';
   }
 
-
   let position;
   if (orientation === 'HORIZONTAL' && top! < 50) {
     position = 'top-10 left-1/2 transform -translate-x-1/2';
-  }
-  else if (orientation === 'HORIZONTAL' && top! > 50) {
+  } else if (orientation === 'HORIZONTAL' && top! > 50) {
     position = '-top-56 left-1/2 transform -translate-x-1/2';
   } else if (orientation === 'VERTICAL' && left! > 50) {
     position = '-left-52 top-1/2 transform -translate-y-1/2';

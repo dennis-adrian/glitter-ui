@@ -1,14 +1,16 @@
-import './Button.scss'
+import './Button.scss';
 
 type Props = {
-  children: React.ReactNode,
-  onClick: () => void
-}
+  children: React.ReactNode;
+  onClick: () => void;
+};
 
 const Button = ({ children, onClick }: Props) => {
   return (
-    <button className='primary-button' onClick={onClick}>{children}</button>
-  )
-}
+    <button className="primary-button" onClick={onClick}>
+      {children}
+    </button>
+  );
+};
 
-export default Button
+export default Button;
