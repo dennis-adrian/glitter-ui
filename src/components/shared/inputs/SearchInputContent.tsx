@@ -1,6 +1,8 @@
 import { SyntheticEvent } from 'react';
 
-export type SearchOptions = Array<{ id: string | number; displayName: string }> | undefined;
+export type SearchOptions =
+  | Array<{ id: string | number; displayName: string }>
+  | undefined;
 
 type Props = {
   show: boolean;

@@ -1,4 +1,4 @@
-import { Festival } from "./festivalTypes";
+import { Festival } from './festivalTypes';
 
 export type FirebaseUser = {
   accessToken?: string;
@@ -8,9 +8,9 @@ export type FirebaseUser = {
   lastName?: string;
   photoURL?: string;
   firebaseId?: string;
-}
+};
 
-export type UserStatus = 'ACTIVE' | 'WAITING_APPROVAL' | 'DISABLED'
+export type UserStatus = 'ACTIVE' | 'WAITING_APPROVAL' | 'DISABLED';
 export interface User {
   id?: number;
   firstName?: string;
@@ -29,4 +29,5 @@ export interface User {
   status: UserStatus;
   hasActiveReservation: boolean;
   festivals: Festival[];
+  disconnect?: boolean;
 }

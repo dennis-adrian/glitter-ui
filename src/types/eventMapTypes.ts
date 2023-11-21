@@ -1,4 +1,4 @@
-import { User } from "./userTypes";
+import { User } from './userTypes';
 
 export type StandOrientation = 'HORIZONTAL' | 'VERTICAL';
 type StandStatus = 'AVAILABLE' | 'RESERVED' | 'CONFIRMED';
@@ -9,7 +9,7 @@ export type StandModel = {
   left?: number;
   orientation: StandOrientation;
   standNumber: number;
-  status: StandStatus
+  status: StandStatus;
   top?: number;
   reservations?: Reservation[];
 };
@@ -34,7 +34,12 @@ export type Reservation = {
   stand?: StandModel;
 };
 
-export type ReservationStatus = 'PENDING' | 'APPROVED' | 'REJECTED' | 'CANCELLED';
+export type ReservationStatus =
+  | 'PENDING'
+  | 'APPROVED'
+  | 'REJECTED'
+  | 'CANCELLED';
+
 export enum ReservationStatusEnum {
   PENDING = 'PENDING',
   APPROVED = 'APPROVED',
