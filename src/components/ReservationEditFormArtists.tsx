@@ -7,6 +7,8 @@ import IconButton from './shared/buttons/IconButton';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { artistsInReservation } from './helpers/reservations.helpers';
 import { ReservationUpdate } from 'src/types/reservationTypes';
+import { useEffect, useState } from 'react';
+import { getArtistsOptions } from './reservations/helpers';
 
 type Props = {
   reservation: ReservationUpdate;
@@ -15,29 +17,13 @@ type Props = {
 
 const ReservationEditFormArtists = ({ reservation, onChange }: Props) => {
   const festival = useSelector((state: RootState) => state.activeFestival);
+  const [artistsOptions, setArtistsOptions] = useState<SearchOptions>(getArtistsOptions(festival, reservation));
 
-  let artistsOptions = festival?.artists?.map((artist) => {
-    const artistsWithReservationsIds = festival?.reservations?.flatMap(
-      (reservation: ReservationUpdate) =>
-        reservation.artists.map((artist) => {
-          if (artist.disconnect) return;
+  useEffect(() => {
+    setArtistsOptions(getArtistsOptions(festival, reservation));
+  }, [festival, reservation]);
 
-          return artist.id;
-        }),
-    );
-
-    if (artistsWithReservationsIds?.includes(artist.id)) return;
-    if (reservation.artists?.find((a) => a.id === artist.id)) return;
-
-    return {
-      id: artist.id!,
-      displayName: artist.displayName!,
-    };
-  });
-
-  artistsOptions = artistsOptions?.filter((o) => o !== undefined);
-
-  // TODO: fix that a removed artsits should be possible to add again
+  // TODO: Find a way to not add/remove artists that have already been added/removed
   const handleAddArtist = (artistId: number) => {
     const artist = festival.artists?.find((artist) => artist.id === artistId);
     if (!artist) return;

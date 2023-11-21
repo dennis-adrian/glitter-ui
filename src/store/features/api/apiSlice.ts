@@ -38,7 +38,7 @@ export const apiSlice = createApi({
         method: 'PUT',
         body: data,
       }),
-      invalidatesTags: ['Reservation'],
+      invalidatesTags: ['Reservation', 'ActiveFestival'],
     }),
     deleteReservation: builder.mutation({
       query: (id: string | number) => ({
