@@ -1,14 +1,21 @@
+import { useEffect, useState } from 'react';
+
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store';
 
-import SearchInput from './shared/inputs/SearchInput';
-import { SearchOptions } from './shared/inputs/SearchInputContent';
-import IconButton from './shared/buttons/IconButton';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+
+import {
+  addToAddList,
+  addToRemoveList,
+  getArtistsOptions,
+} from './reservations/helpers';
 import { artistsInReservation } from './helpers/reservations.helpers';
 import { ReservationUpdate } from 'src/types/reservationTypes';
-import { useEffect, useState } from 'react';
-import { getArtistsOptions } from './reservations/helpers';
+import { SearchOptions } from './shared/inputs/SearchInputContent';
+
+import SearchInput from './shared/inputs/SearchInput';
+import IconButton from './shared/buttons/IconButton';
 
 type Props = {
   reservation: ReservationUpdate;
@@ -17,24 +24,20 @@ type Props = {
 
 const ReservationEditFormArtists = ({ reservation, onChange }: Props) => {
   const festival = useSelector((state: RootState) => state.activeFestival);
-  const [artistsOptions, setArtistsOptions] = useState<SearchOptions>(getArtistsOptions(festival, reservation));
+  const [artistsOptions, setArtistsOptions] = useState<SearchOptions>(
+    getArtistsOptions(festival, reservation),
+  );
 
   useEffect(() => {
     setArtistsOptions(getArtistsOptions(festival, reservation));
   }, [festival, reservation]);
 
-  // TODO: Find a way to not add/remove artists that have already been added/removed
   const handleAddArtist = (artistId: number) => {
     const artist = festival.artists?.find((artist) => artist.id === artistId);
     if (!artist) return;
 
     const newArtists = [...reservation.artists, artist];
-    let artistsIdsToAdd;
-    if (reservation.artistsIdsToAdd) {
-      artistsIdsToAdd = [...reservation.artistsIdsToAdd, artistId];
-    } else {
-      artistsIdsToAdd = [artistId];
-    }
+    const artistsIdsToAdd = addToAddList(reservation, artistId);
     onChange({ ...reservation, artists: newArtists, artistsIdsToAdd });
   };
 
@@ -42,12 +45,7 @@ const ReservationEditFormArtists = ({ reservation, onChange }: Props) => {
     const newArtists = reservation.artists.filter(
       (artist) => artist.id !== artistId,
     );
-    let artistsIdsToRemove;
-    if (reservation.artistsIdsToRemove) {
-      artistsIdsToRemove = [...reservation.artistsIdsToRemove, artistId];
-    } else {
-      artistsIdsToRemove = [artistId];
-    }
+    const artistsIdsToRemove = addToRemoveList(reservation, artistId);
     onChange({ ...reservation, artists: newArtists, artistsIdsToRemove });
   };
 
@@ -57,7 +55,10 @@ const ReservationEditFormArtists = ({ reservation, onChange }: Props) => {
         if (artist.disconnect) return;
 
         return (
-          <div key={artist.id} className="flex justify-between my-4">
+          <div
+            key={artist.id}
+            className="flex justify-between px-2 py-1 items-center"
+          >
             <h1>{artist.displayName}</h1>
             <IconButton
               icon={faTrash}
@@ -67,15 +68,13 @@ const ReservationEditFormArtists = ({ reservation, onChange }: Props) => {
           </div>
         );
       })}
-      <div className="mt-4">
-        {artistsInReservation(reservation).length < 2 && (
-          <SearchInput
-            options={artistsOptions as SearchOptions}
-            onSelect={handleAddArtist}
-            placeholder="Añadir artista"
-          />
-        )}
-      </div>
+      {artistsInReservation(reservation).length < 2 && (
+        <SearchInput
+          options={artistsOptions as SearchOptions}
+          onSelect={handleAddArtist}
+          placeholder="Añadir artista"
+        />
+      )}
     </div>
   );
 };

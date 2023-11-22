@@ -4,18 +4,18 @@ type Props = {
   children: React.ReactNode;
   show: boolean;
   onHide: () => void;
+  onShow?: () => void;
 };
 
-const Modal = ({ children, show, onHide }: Props) => {
+const Modal = ({ children, show, onHide, onShow }: Props) => {
   const modalRef = useRef<HTMLDialogElement>(null);
 
-  React.useEffect(() => {
-    if (show) {
-      modalRef.current?.showModal();
-    } else {
-      modalRef.current?.close();
-    }
-  }, [show, onHide]);
+  if (show) {
+    if (onShow) onShow();
+    modalRef.current?.showModal();
+  } else {
+    modalRef.current?.close();
+  }
 
   return (
     <dialog
