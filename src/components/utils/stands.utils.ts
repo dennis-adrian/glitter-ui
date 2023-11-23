@@ -1,5 +1,15 @@
 import { StandPosition } from '../../types/eventMapTypes';
 
+export const cbaGalleryStandProportions = {
+  wideSide: 0.089,
+  narrowSide: 0.059,
+};
+
+export const cbaPatioStandProportions = {
+  wideSide: 0.142,
+  narrowSide: 0.115,
+};
+
 export const cbaGalleryPositionsV1 = [
   { id: 1, left: 30, top: 90.2 },
   { id: 2, left: 28.4, top: 81.1 },

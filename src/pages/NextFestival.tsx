@@ -1,8 +1,7 @@
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store';
 
-import CbaGalleryMap from '../components/festivalMaps/CbaGalleryMap';
-import CbaPatioMap from '../components/festivalMaps/CbaPatioMap';
+import FestivalMaps from 'src/components/festival_maps/FestivalMaps';
 
 const NextFestivalPage = () => {
   const festival = useSelector((state: RootState) => state.activeFestival);
@@ -38,10 +37,7 @@ const NextFestivalPage = () => {
         </div>
       </section>
       {festival?.stands && (
-        <>
-          <CbaGalleryMap stands={festival.stands} />
-          <CbaPatioMap stands={festival.stands} />
-        </>
+        <FestivalMaps festival={festival} />
       )}
     </div>
   );
