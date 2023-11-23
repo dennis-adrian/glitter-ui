@@ -1,5 +1,6 @@
-import { Navigate, useLoaderData } from 'react-router-dom';
-import { User } from '../types/userTypes';
+import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/store';
 
 type Props = {
   component: React.ComponentType;
@@ -10,12 +11,12 @@ export const ProtectedRoute = ({
   component: Component,
   forAdmin = false,
 }: Props) => {
-  const loaderData = useLoaderData();
-  if (!loaderData) {
+  const user = useSelector((state: RootState) => state.currentUser);
+  if (!user.id) {
     return <Navigate to="/login" />;
   }
 
-  if (forAdmin && !(loaderData as User).isAdmin) {
+  if (forAdmin && !user.isAdmin) {
     return <Navigate to="/" />;
   }
 

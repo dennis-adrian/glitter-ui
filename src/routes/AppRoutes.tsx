@@ -6,7 +6,6 @@ import HomePage from '../pages/Home';
 import LoginPage from '../pages/Login';
 import UserProfile from '../pages/UserProfile';
 import NextFestivalPage from '../pages/NextFestival';
-import { userLoader } from './loaders/userLoader';
 import DashboardPage from '../pages/Dashboard';
 import App from '../App';
 import Festivals from '../components/Festivals';
@@ -26,7 +25,6 @@ export const AppRoutes = createBrowserRouter([
       {
         path: 'user_profile',
         element: <ProtectedRoute component={UserProfile} />,
-        loader: userLoader,
       },
       {
         path: 'login',
@@ -39,7 +37,6 @@ export const AppRoutes = createBrowserRouter([
       {
         path: 'dashboard',
         element: <ProtectedRoute component={DashboardPage} forAdmin />,
-        loader: userLoader,
         children: [
           {
             path: 'users',

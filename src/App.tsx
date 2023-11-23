@@ -13,24 +13,29 @@ import {
 
 import Navbar from 'components/shared/navbar/Navbar';
 import DrawerRoot from 'components/shared/mobile_drawer/DrawerRoot';
+import { useEffect } from 'react';
 
 function App() {
   const dispatch = useDispatch();
   const userId = localStorage.getItem('userId');
-  const { data: currentUser, isSuccess } = useGetCurrentUserQuery(
-    userId || '0',
-  );
-  const { data: activeFestivals, isSuccess: isFestivalSuccess } =
-    useGetActiveFestivalQuery(userId || '');
+  const { data: currentUser, isSuccess } = useGetCurrentUserQuery(userId!, {
+    skip: !userId,
+  });
+  const { data: festival, isSuccess: isFestivalSuccess } =
+    useGetActiveFestivalQuery('');
 
-  if (isSuccess) {
-    dispatch(setCurrentUser(currentUser));
-    dispatch(setLoginStatus(true));
-  }
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(setCurrentUser(currentUser));
+      dispatch(setLoginStatus(true));
+    }
+  }, [dispatch, isSuccess, currentUser]);
 
-  if (isFestivalSuccess) {
-    dispatch(setActiveFestival(activeFestivals[0]));
-  }
+  useEffect(() => {
+    if (isFestivalSuccess) {
+      dispatch(setActiveFestival(festival));
+    }
+  }, [dispatch, isFestivalSuccess, festival]);
 
   return (
     <DrawerRoot>

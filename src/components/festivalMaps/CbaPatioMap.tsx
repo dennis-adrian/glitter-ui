@@ -1,24 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import festivalMap from '../../assets/cba_patio_map.png';
 import { cbaPatioPositionsV1 } from '../utils/standPositions';
 import { StandModel, StandPosition } from '../../types/eventMapTypes';
 import Stand from '../Stand';
 
 type Props = {
-  stands?: StandModel[];
+  stands: StandModel[];
 };
 
 const CbaPatioMap = ({ stands }: Props) => {
+  const patioStands = stands!.filter(
+    (stand: StandModel) => stand.label === 'P',
+  );
   const [mapLoaded, setMapLoaded] = useState(false);
-  const [galleryStands, setGalleryStands] = useState<StandModel[]>([]);
-
-  useEffect(() => {
-    const filteredStands = stands!.filter(
-      (stand: StandModel) => stand.label === 'P',
-    );
-
-    setGalleryStands(filteredStands);
-  }, [stands]);
 
   return (
     <div className="m-auto max-w-md p-1 mt-4">
@@ -33,7 +27,8 @@ const CbaPatioMap = ({ stands }: Props) => {
           />
         </section>
         {mapLoaded &&
-          galleryStands.map((stand) => {
+          patioStands.length &&
+          patioStands.map((stand) => {
             const position = cbaPatioPositionsV1.find(
               (position: StandPosition) => position.id === stand.standNumber,
             );

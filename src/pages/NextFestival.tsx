@@ -1,14 +1,11 @@
 import { useSelector } from 'react-redux';
-import { RootState } from '../store';
+import { RootState } from 'src/store';
 
 import CbaGalleryMap from '../components/festivalMaps/CbaGalleryMap';
 import CbaPatioMap from '../components/festivalMaps/CbaPatioMap';
 
 const NextFestivalPage = () => {
-  const { stands } = useSelector((state: RootState) => state.activeFestival);
-  const activeFestival = useSelector(
-    (state: RootState) => state.activeFestival,
-  );
+  const festival = useSelector((state: RootState) => state.activeFestival);
 
   return (
     <div>
@@ -23,7 +20,7 @@ const NextFestivalPage = () => {
               Si fuiste seleccionada o seleccionado para participar de nuestra
               siguiente versión de{' '}
               <span className="font-bold text-fuchsia-900">
-                {activeFestival.name}
+                {festival.name}
               </span>{' '}
               en esta sección podrás elegir tu mesa para la edición de
               diciembre. En caso de compartir mesa, ambos artistas deben crearse
@@ -40,8 +37,12 @@ const NextFestivalPage = () => {
           </div>
         </div>
       </section>
-      <CbaGalleryMap stands={stands} />
-      <CbaPatioMap stands={stands} />
+      {festival?.stands && (
+        <>
+          <CbaGalleryMap stands={festival.stands} />
+          <CbaPatioMap stands={festival.stands} />
+        </>
+      )}
     </div>
   );
 };

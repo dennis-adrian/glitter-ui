@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import festivalMap from '../../assets/cba_gallery.png';
 import { cbaGalleryPositionsV1 } from '../utils/standPositions';
@@ -6,20 +6,14 @@ import { StandModel, StandPosition } from '../../types/eventMapTypes';
 import Stand from '../Stand';
 
 type Props = {
-  stands?: StandModel[];
+  stands: StandModel[];
 };
 
 const CbaGalleryMap = ({ stands }: Props) => {
+  const galleryStands = stands.filter(
+    (stand: StandModel) => stand.label === 'G',
+  );
   const [mapLoaded, setMapLoaded] = useState(false);
-  const [galleryStands, setGalleryStands] = useState<StandModel[]>([]);
-
-  useEffect(() => {
-    const filteredStands = stands!.filter(
-      (stand: StandModel) => stand.label === 'G',
-    );
-
-    setGalleryStands(filteredStands);
-  }, [stands]);
 
   return (
     <div className="m-auto max-w-md p-1">
@@ -34,6 +28,7 @@ const CbaGalleryMap = ({ stands }: Props) => {
           />
         </section>
         {mapLoaded &&
+          galleryStands.length &&
           galleryStands.map((stand) => {
             const position = cbaGalleryPositionsV1.find(
               (position: StandPosition) => position.id === stand.standNumber,
