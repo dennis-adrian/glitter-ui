@@ -10,6 +10,7 @@ type Props = {
   stands: StandModel[];
   standsPositions: StandPosition[];
   standProportions: { wideSide: number; narrowSide: number };
+  onStandClick: (stand: StandModel) => void;
 };
 
 const FestivalMap = ({
@@ -18,6 +19,7 @@ const FestivalMap = ({
   stands,
   standsPositions,
   standProportions,
+  onStandClick,
 }: Props) => {
   const [isMapLoaded, setIsMapLoaded] = useState(false);
   const [imgSize, setImgSize] = useState({ width: 0, height: 0 });
@@ -74,6 +76,7 @@ const FestivalMap = ({
                 position={position}
                 proportions={standProportions}
                 stand={stand}
+                onClick={onStandClick}
               />
             );
           })}

@@ -3,7 +3,7 @@ import { baseUrl } from '../../../utils';
 
 export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({ baseUrl }),
-  tagTypes: ['User', 'Reservation', 'CurrentUser', 'ActiveFestival'],
+  tagTypes: ['User', 'Reservations', 'CurrentUser', 'ActiveFestival'],
   endpoints: (builder) => ({
     getCurrentUser: builder.query({
       query: (id: string) => `/users/${id}`,
@@ -21,16 +21,17 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['User'],
     }),
-    updateStands: builder.mutation({
-      query: (data) => ({
-        url: `/stands/${data.id}`,
-        method: 'PUT',
-        body: data,
-      }),
-    }),
     getReservations: builder.query({
       query: () => '/reservations',
-      providesTags: ['Reservation'],
+      providesTags: ['Reservations'],
+    }),
+    createReservation: builder.mutation({
+      query: (data) => ({
+        url: '/reservations',
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['Reservations', 'ActiveFestival', 'CurrentUser'],
     }),
     updateReservation: builder.mutation({
       query: (data) => ({
@@ -38,18 +39,18 @@ export const apiSlice = createApi({
         method: 'PUT',
         body: data,
       }),
-      invalidatesTags: ['Reservation', 'ActiveFestival'],
+      invalidatesTags: ['Reservations', 'ActiveFestival'],
     }),
     deleteReservation: builder.mutation({
       query: (id: string | number) => ({
         url: `/reservations/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Reservation', 'ActiveFestival'],
+      invalidatesTags: ['Reservations', 'ActiveFestival'],
     }),
     getReservationsByFestival: builder.query({
       query: (id: string | number) => `/reservations?festival=${id}`,
-      providesTags: ['Reservation'],
+      providesTags: ['Reservations'],
     }),
     getActiveFestival: builder.query({
       query: () => '/festivals?active=true',
@@ -62,7 +63,7 @@ export const {
   useGetCurrentUserQuery,
   useGetUsersQuery,
   useUpdateUserMutation,
-  useUpdateStandsMutation,
+  useCreateReservationMutation,
   useGetReservationsQuery,
   useUpdateReservationMutation,
   useDeleteReservationMutation,

@@ -4,7 +4,7 @@ import { SearchOptions } from '../shared/inputs/SearchInputContent';
 
 export const getArtistsOptions = (
   festival: Festival,
-  reservation: ReservationUpdate,
+  reservation?: ReservationUpdate,
 ): SearchOptions => {
   if (!festival) return [];
 
@@ -15,12 +15,20 @@ export const getArtistsOptions = (
   );
 
   const options = festival.artists?.filter((artist) => {
-    const isSetToRemove = reservation.artistsIdsToRemove?.includes(artist.id!);
-    const isSetToAdd = reservation.artistsIdsToAdd?.includes(artist.id!);
     const hasReservation = festivalArtistsIdsWithReservations?.includes(
       artist.id!,
     );
-    return !(hasReservation || isSetToAdd) || isSetToRemove;
+
+    // if there is a reservation it means that we're editing so we need to check if the artist is in the reservation
+    if (reservation) {
+      const isSetToRemove = reservation.artistsIdsToRemove?.includes(
+        artist.id!,
+      );
+      const isSetToAdd = reservation.artistsIdsToAdd?.includes(artist.id!);
+      return !(hasReservation || isSetToAdd) || isSetToRemove;
+    }
+
+    return !hasReservation;
   });
 
   if (!options?.length) return [];

@@ -1,6 +1,8 @@
-import { Outlet } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
+import { Outlet } from 'react-router-dom';
+
+import { useDispatch } from 'react-redux';
 import {
   setCurrentUser,
   setLoginStatus,
@@ -11,9 +13,8 @@ import {
   useGetCurrentUserQuery,
 } from 'src/store/features/api/apiSlice';
 
-import Navbar from 'components/shared/navbar/Navbar';
 import DrawerRoot from 'components/shared/mobile_drawer/DrawerRoot';
-import { useEffect } from 'react';
+import Navbar from 'components/shared/navbar/Navbar';
 
 function App() {
   const dispatch = useDispatch();

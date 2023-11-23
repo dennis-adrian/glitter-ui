@@ -8,9 +8,10 @@ import FestivalMap from './FestivalMap';
 
 type Props = {
   stands: StandModel[];
+  onStandClick: (stand: StandModel) => void;
 };
 
-const CbaGalleryMap = ({ stands }: Props) => {
+const CbaGalleryMap = ({ stands, onStandClick }: Props) => {
   const galleryStands = stands.filter(
     (stand: StandModel) => stand.label === 'G',
   );
@@ -22,6 +23,7 @@ const CbaGalleryMap = ({ stands }: Props) => {
       stands={galleryStands}
       standsPositions={cbaGalleryPositionsV1}
       standProportions={cbaGalleryStandProportions}
+      onStandClick={onStandClick}
     />
   );
 };
