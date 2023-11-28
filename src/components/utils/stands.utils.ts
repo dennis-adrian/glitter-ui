@@ -5,14 +5,19 @@ export const cbaGalleryStandProportions = {
   narrowSide: 0.059,
 };
 
+export const cbaPatioStandProportions = {
+  wideSide: 0.142,
+  narrowSide: 0.115,
+};
+
 export const cbaGalleryStandProportionsV2 = {
   wideSide: 0.125,
   narrowSide: 0.09,
 };
 
-export const cbaPatioStandProportions = {
-  wideSide: 0.142,
-  narrowSide: 0.115,
+export const cbaPatioStandProportionsV2 = {
+  wideSide: 0.156,
+  narrowSide: 0.128,
 };
 
 export const cbaGalleryPositionsV1 = [
@@ -112,4 +117,13 @@ export const cbaGalleryPositionsV2 = [
   { id: 24, left: 73.5, top: 44.7 },
   { id: 25, left: 73.5, top: 58.4 },
   { id: 26, left: 61, top: 72 },
+] as StandPosition[];
+
+export const cbaPatioPositionsV2 = [
+  { id: 1, left: 58, top: 82.6 },
+  { id: 2, left: 27, top: 82.6 },
+  { id: 3, left: 2.5, top: 46.5 },
+  { id: 4, left: 2.5, top: 12.7 },
+  { id: 5, left: 87.2, top: 12.7 },
+  { id: 6, left: 87.2, top: 46.5 },
 ] as StandPosition[];
