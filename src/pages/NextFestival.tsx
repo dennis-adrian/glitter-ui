@@ -36,7 +36,7 @@ const NextFestivalPage = () => {
           </div>
         </div>
       </section>
-      {festival?.stands?.length && (
+      {(festival?.stands && festival.stands.length > 0) && (
         <FestivalMaps festival={festival} />
       )}
     </div>

@@ -1,7 +1,7 @@
-import festivalMap from 'assets/cba_patio_map.png';
+import festivalMap from 'assets/cba_patio_v2.png';
 import {
-  cbaPatioPositionsV1,
-  cbaPatioStandProportions,
+  cbaPatioPositionsV2,
+  cbaPatioStandProportionsV2,
 } from 'src/components/utils/stands.utils';
 import { StandModel } from 'src/types/eventMapTypes';
 import FestivalMap from './FestivalMap';
@@ -21,8 +21,8 @@ const CbaPatioMap = ({ stands, onStandClick }: Props) => {
       label="Distribución del patio"
       mapImg={festivalMap}
       stands={patioStands}
-      standsPositions={cbaPatioPositionsV1}
-      standProportions={cbaPatioStandProportions}
+      standsPositions={cbaPatioPositionsV2}
+      standProportions={cbaPatioStandProportionsV2}
       onStandClick={onStandClick}
     />
   );
