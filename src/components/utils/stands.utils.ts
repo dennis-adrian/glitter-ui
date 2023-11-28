@@ -5,6 +5,11 @@ export const cbaGalleryStandProportions = {
   narrowSide: 0.059,
 };
 
+export const cbaGalleryStandProportionsV2 = {
+  wideSide: 0.125,
+  narrowSide: 0.09,
+};
+
 export const cbaPatioStandProportions = {
   wideSide: 0.142,
   narrowSide: 0.115,
@@ -78,4 +83,33 @@ export const cbaPatioPositionsV1 = [
   { id: 12, left: 85.4, top: 30.8 },
   { id: 13, left: 85.4, top: 45.1 },
   { id: 14, left: 85.4, top: 59.8 },
+] as StandPosition[];
+
+export const cbaGalleryPositionsV2 = [
+  { id: 1, left: 22, top: 88.6 },
+  { id: 2, left: 9.3, top: 88.6 },
+  { id: 3, left: 1, top: 75 },
+  { id: 4, left: 1, top: 61 },
+  { id: 5, left: 1, top: 47 },
+  { id: 6, left: 9, top: 38.2 },
+  { id: 7, left: 22, top: 38.2 },
+  { id: 8, left: 35.6, top: 22.4 },
+  { id: 9, left: 52.7, top: 4.3 },
+  { id: 10, left: 65.5, top: 4.3 },
+  { id: 11, left: 78.2, top: 4.3 },
+  { id: 12, left: 90.7, top: 19.5 },
+  { id: 13, left: 90.7, top: 33.3 },
+  { id: 14, left: 90.7, top: 47 },
+  { id: 15, left: 90.7, top: 61 },
+  { id: 16, left: 90.7, top: 74.8 },
+  { id: 17, left: 78, top: 88.6 },
+  { id: 18, left: 65.4, top: 88.6 },
+  { id: 19, left: 52.7, top: 88.6 },
+  { id: 20, left: 52.8, top: 58.2 },
+  { id: 21, left: 52.8, top: 44.3 },
+  { id: 22, left: 52.8, top: 30.4 },
+  { id: 23, left: 61, top: 21.4 },
+  { id: 24, left: 73.5, top: 44.7 },
+  { id: 25, left: 73.5, top: 58.4 },
+  { id: 26, left: 61, top: 72 },
 ] as StandPosition[];
