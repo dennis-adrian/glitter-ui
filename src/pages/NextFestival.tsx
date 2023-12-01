@@ -31,7 +31,7 @@ const NextFestivalPage = () => {
           </div>
           <div className="card text-fuchsia-900 bg-amber-100 m-4 shadow-xl">
             <div className="card-body">
-              Las medidas de la mesa son de aproximadamente 120cm x 60cm
+              Las medidas de la mesa son de aproximadamente 240cm x 60cm
             </div>
           </div>
         </div>
